@@ -12,12 +12,7 @@ body {
   padding: 10px;
 }
 
-h2 {
-  font-size: 2em;
-  font-weight: 300;
-  color: #5C75DA;
-  letter-spacing: .9px
-}
+
 
 .username {
   font-weight: 600;
@@ -31,9 +26,23 @@ canvas {
 .welcome-section {
   grid-area: welcome;
   margin-bottom: 10px;
+
+  .logo {
+  align-items: center;
+  display: inline-block;
+  font-size: 20px;
+  margin: 0px;
+  width: 83%;
 }
 
-.date {
+  h2 {
+  font-size: 2em;
+  font-weight: 300;
+  color: #5C75DA;
+  letter-spacing: .9px
+}
+
+  .date {
   background-color: #5C75DA;
   border-radius: 3px;
   float: right;
@@ -43,23 +52,16 @@ canvas {
   width: 175px;
   color: #EAEBEF;
   font-weight: 600;
-
 }
 
-.logo {
-  align-items: center;
-  display: inline-block;
-  font-size: 20px;
-  margin: 0px;
-  width: 83%;
-}
-
-.welcome-message {
+  .welcome-message {
   border-radius: 3px;
   margin: 15px 3px 10px 3px;
   padding: 3px 15px;
   text-align: left;
 }
+}
+
 
 .grid {
   margin-left: 45px;
