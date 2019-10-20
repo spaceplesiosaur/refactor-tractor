@@ -12,7 +12,35 @@ import ActivityRepo from "./ActivityRepo";
 import activityData from "../data/activity";
 import allSleepData from "../data/sleep";
 import userData from "../data/users";
-import hydrationData from "../data/hydration";
+//import hydrationData from "../data/hydration";
+
+
+//Generate random user
+const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
+
+//Repo variables
+const userRepo = new UserRepo(userData);
+
+const user = new User(userData[uniqueUserIndex]);
+
+let hydrationData;
+let hydration;
+
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+                                          .then(response => response.json())
+                                          .then(data => hydrationData = data.hydrationData)
+                                          .then(() => hydration = new Hydration(hydrationData, user.id))
+
+
+//
+// async function fetch() {
+// hydrationDataFetch = await fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData');
+// hydrationDataJson = await hydrationData.json();
+// hydrationData = JSON.stringify(hydrationDataJson)
+// }
+
+
+
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
@@ -31,17 +59,13 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 
 
-//Generate random user 
-const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
-//Repo variables
-const userRepo = new UserRepo(userData);
 const sleepRepo = new SleepRepo(allSleepData);
 const activityRepo = new ActivityRepo(activityData, userData);
 
 //Individual Class Repos
-const user = new User(userData[uniqueUserIndex]);
-const hydration = new Hydration(hydrationData, user.id);
+
+
 const sleep = new Sleep(allSleepData, user.id);
 const activity = new Activity(activityData, user);
 
@@ -66,7 +90,7 @@ function dropYear(dates) {
 }
 $(document).ready(function () {
 
-  //Packery Items 
+  //Packery Items
   // let $grid = $('.grid').packery({
   //   itemSelector: '.grid-item',
   //   columnWidth: 30,
