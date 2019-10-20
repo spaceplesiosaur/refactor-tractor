@@ -12,8 +12,6 @@ import ActivityRepo from "./ActivityRepo";
 import activityData from "../data/activity";
 import allSleepData from "../data/sleep";
 import userData from "../data/users";
-//import hydrationData from "../data/hydration";
-
 
 //Generate random user
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
