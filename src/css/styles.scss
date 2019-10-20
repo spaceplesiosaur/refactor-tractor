@@ -12,12 +12,6 @@ body {
   padding: 10px;
 }
 
-
-
-.username {
-  font-weight: 600;
-}
-
 canvas {
   width: 200px;
   height: 100px;
@@ -59,6 +53,10 @@ canvas {
   margin: 15px 3px 10px 3px;
   padding: 3px 15px;
   text-align: left;
+}
+
+  .username {
+  font-weight: 600;
 }
 }
 
