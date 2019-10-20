@@ -31,17 +31,6 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
                                           .then(data => hydrationData = data.hydrationData)
                                           .then(() => hydration = new Hydration(hydrationData, user.id))
 
-
-//
-// async function fetch() {
-// hydrationDataFetch = await fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData');
-// hydrationDataJson = await hydrationData.json();
-// hydrationData = JSON.stringify(hydrationDataJson)
-// }
-
-
-
-
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
 import './css/styles.css';
