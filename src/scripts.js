@@ -134,7 +134,7 @@ $(document).ready(function () {
   });
 
   //Sleep
-  $('.hours-slept-day').text(`${sleep.returnsleepData(date, 'hoursSlept')} hours | ${sleep.returnsleepData(date, 'sleepQuality')} quality`);
+  $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',

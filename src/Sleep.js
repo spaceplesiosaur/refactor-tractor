@@ -25,7 +25,7 @@ class Sleep {
       }, 0) / specificUser.length).toFixed(2));
     }
 
-  returnsleepData(date, relevantProperty) {
+  returnSleepData(date, relevantProperty) {
     let specificUser = this.findUser();
     return specificUser.find(day => day.date === date)[relevantProperty];
   }
