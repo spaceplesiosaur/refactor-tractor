@@ -27,7 +27,7 @@ describe('SleepRepo', () => {
   });
 
   it('should return all users who average a sleep quality greater than 3 for a given week', () => {
-    
+
     expect(sleepRepo.returnAboveAverageSleepers(1)).to.eql([3]);
   });
 
@@ -36,7 +36,7 @@ describe('SleepRepo', () => {
   });
 
   it('should return the users who got the most sleep over the last week', () => {
-    expect(sleepRepo.returnWeeklyLongestSleepers(1)).to.eql([57.3, 2])
+    expect(sleepRepo.returnWeeklyLongestSleepers(1, 'hoursSlept')).to.eql([57.3, 2])
   });
 
 });
