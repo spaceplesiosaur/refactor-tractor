@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>Activity Tracker</title>
@@ -19,7 +19,7 @@
     <h2 class="welcome-message">Welcome <span class="username"></span></h2>
   </section>
   <div class="grid">
-    <section class="data-section hydration grid-item draggable" tabindex="1">
+    <section class="data-section hydration grid-item draggable" tabindex="0">
       <h4 class="data-heading">Hydration</h4>
       <article class="data-article water-consumed-article">
         <img class="img-medium" src="./images/drop.svg" alt="water droplet">
@@ -31,7 +31,7 @@
           alt="A bar chart that displays the number of ounces of water the user consumed daily, over the course of a week."></canvas>
       </article>
     </section>
-    <section class="data-section sleep grid-item draggable" tabindex="2">
+    <section class="data-section sleep grid-item draggable" tabindex="0">
       <h4 class="data-heading">Sleep</h4>
       <article class="data-article hours-slept-day-article">
         <img class="img-medium" src="./images/moon.svg" alt="moon with stars">
@@ -49,7 +49,7 @@
         <p class="data-text longest-sleepers"></p>
       </article>
     </section>
-    <section class="data-section activity grid-item draggable" tabindex="3">
+    <section class="data-section activity grid-item draggable" tabindex="0">
       <h4 class="data-heading">Activity</h4>
       <article class="data-article user-step-goal"></article>
       <article class="data-article average-step-goal"></article>
@@ -127,11 +127,11 @@
         <p class="data-text most-active"></p>
       </article>
     </section>
-    <section class="data-section friends grid-item draggable" tabindex="4">
+    <section class="data-section friends grid-item draggable" tabindex="0">
       <h4 class="data-heading">Friends</h4>
       <article class="friends-step"></article>
     </section>
-    <section class="data-section challenges grid-item draggable" tabindex="5">
+    <section class="data-section challenges grid-item draggable" tabindex="0">
       <h4 class="data-heading">Challenges</h4>
       <article class="increasing-steps-article">
         <h4>3 Day Step Streak</h4>
@@ -144,7 +144,7 @@
     </section>
   </div>
 
-  
+
   <script src="https://unpkg.com/packery@2.1/dist/packery.pkgd.min.js"></script>
   <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
 </body>

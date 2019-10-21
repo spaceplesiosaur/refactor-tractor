@@ -15,7 +15,7 @@ body {
 h2 {
   font-size: 2em;
   font-weight: 300;
-  color: #5C75DA;
+  color: #0732e0;
   letter-spacing: .9px
 }
 
@@ -34,7 +34,7 @@ canvas {
 }
 
 .date {
-  background-color: #5C75DA;
+  background-color: #0732e0;
   border-radius: 3px;
   float: right;
   font-size: 10px;
@@ -83,7 +83,7 @@ canvas {
   margin: 0px 0px 15px 0px;
   font-size: 1.5em;
   font-weight: 200;
-  color: #5C75DA;
+  color: #0732e0;
   letter-spacing: 1px;
 }
 
@@ -102,7 +102,7 @@ canvas {
   font-size: 10px;
   font-weight: 700;
   margin: 5px;
-  color: #5C75DA;
+  color: #0732e0;
 }
 
 .water-consumed {
@@ -144,7 +144,7 @@ img {
 }
 
 .border {
-  border-right: 2px solid #5C75DA;
+  border-right: 2px solid #0732e0;
   height: 100px;
   margin-top: 15px;
 }
