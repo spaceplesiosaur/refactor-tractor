@@ -1,3 +1,5 @@
+@import '/_variable.scss';
+
 html {
   box-sizing: border-box
 }
@@ -36,12 +38,12 @@ canvas {
   h2 {
     font-size: 2em;
     font-weight: 300;
-    color: #5C75DA;
+    color: $text-color;
     letter-spacing: .9px
   }
 
   .date {
-    background-color: #5C75DA;
+    background-color: $text-color;
     border-radius: 3px;
     float: right;
     font-size: 10px;
@@ -91,7 +93,7 @@ canvas {
     margin: 0px 0px 15px 0px;
     font-size: 1.5em;
     font-weight: 200;
-    color: #5C75DA;
+    color: $text-color;
     letter-spacing: 1px;
   }
 
@@ -109,11 +111,11 @@ canvas {
       font-size: 10px;
       font-weight: 700;
       margin: 5px;
-      color: #5C75DA;
+      color: $text-color;
     }
   }
 
-  
+
 }
 
 
