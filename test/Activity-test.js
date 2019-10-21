@@ -30,7 +30,7 @@ describe('Activity', () => {
   });
 
   it('should return the number of steps for specific user for a specific day', () => {
-    expect(activity.returnNumStepsDay("2019/06/17")).to.equal(14329);
+    expect(activity.returnUserDataForDay("2019/06/17", 'numSteps')).to.equal(14329);
   });
 
   it('should return the miles walked by a specific user for a specific day', () => {
@@ -38,23 +38,23 @@ describe('Activity', () => {
   });
 
   it('should return number of flights of stairs climbed by a specific user for a specific day', () => {
-    expect(activity.returnFlightsOfStairs("2019/06/17")).to.equal(18);
+    expect(activity.returnUserDataForDay("2019/06/17", 'flightsOfStairs')).to.equal(18);
   });
 
   it('should return the minutes active for a day', () => {
-    expect(activity.returnMinutesActive("2019/06/26")).to.equal(219);
+    expect(activity.returnUserDataForDay("2019/06/26", 'minutesActive')).to.equal(219);
   });
 
   it('should return the average minutes active for a week', () => {
-    expect(activity.returnAverageMinutesActiveForWeek(1)).to.equal(148);
+    expect(activity.returnAverageDataForWeek(1, 'minutesActive')).to.equal(148);
   });
 
   it('should return the average steps for a week', () => {
-    expect(activity.returnAverageStepsForWeek(1)).to.equal(7908);
+    expect(activity.returnAverageDataForWeek(1, 'numSteps')).to.equal(7908);
   });
 
-  it('should return the average steps for a week', () => {
-    expect(activity.returnAverageStairsForWeek(1)).to.equal(19);
+  it('should return the average stairs for a week', () => {
+    expect(activity.returnAverageDataForWeek(1, 'flightsOfStairs')).to.equal(19);
   });
 
   it('should return false if they did not meet their step goal for a date', () => {

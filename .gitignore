@@ -1,5 +1,9 @@
 # Dependency directories
 node_modules/
+<<<<<<< HEAD
 dist/
 .vscode/
 test/.DS_Store
+=======
+.DS_Store
+>>>>>>> c7fb8f80efbbb266f6a414abb2405b0dbf419a9a
