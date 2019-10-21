@@ -10,6 +10,14 @@ class SleepRepo {
     }, 0) / this.sleepData.length).toFixed(1));
   }
   returnDataByUser() {
+    // return dataList.reduce((arr, user) => {
+    //   if (!arr[user.userID - 1]) {
+    //     arr[user.userID - 1] = [user];
+    //   } else {
+    //     arr[user.userID - 1].push(user);
+    //   }
+    //   return arr;
+    // }, []);
     return this.sleepData.reduce((arr, user) => {
       if (!arr[user.userID - 1]) {
         arr[user.userID - 1] = [user];
@@ -21,15 +29,18 @@ class SleepRepo {
   }
 
   returnAvgSleepDataPerUser(week, relevantProperty) {
-    let dataByUser = this.returnDataByUser()
+    let sleepData = this.sleepData;
+    let dataByUser = this.returnDataByUser(sleepData);
+    // let dataByUser = this.returnDataByUser()
 
     return dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalQuality, day) => {
       totalQuality += day[relevantProperty];
       return totalQuality;
     }, 0))
-  }
+  };
 
   returnAboveAverageSleepers(week) {
+    // let sleepData = this.sleepData;
     let dataByUser = this.returnDataByUser();
     // let dataByUser = this.sleepData.reduce((arr, user) => {
     //   if (!arr[user.userID - 1]) {
@@ -45,7 +56,12 @@ class SleepRepo {
     //   return totalQuality;
     // }, 0)).map(user => Number((user / 7).toFixed(2)));
 
+    console.log('DATA BY USER', dataByUser.map(user => [...user].splice(-7 * week, 7)));
+
+
     let avgSleepQualityPerUser = this.returnAvgSleepDataPerUser(dataByUser, 'sleepQuality').map(user => Number((user / 7).toFixed(2)));
+
+    console.log('AV SLEEP QUALITY PER USER', avgSleepQualityPerUser);
 
     let goodSleepers = [];
     avgSleepQualityPerUser.forEach((user, index) => {
@@ -75,6 +91,8 @@ class SleepRepo {
     // }, []);
 
     let avgSleepHoursPerUser = this.returnAvgSleepDataPerUser(dataByUser, 'hoursSlept')
+
+    console.log('AV SLEEP HOURS', avgSleepHoursPerUser);
 
     // let avgSleepHoursPerUser = dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalHours, day) => {
     //   totalHours += day.hoursSlept;
