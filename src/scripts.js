@@ -27,7 +27,7 @@ let hydration;
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
-import './css/styles.css';
+import './css/styles.scss';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/appointment.svg'
@@ -42,11 +42,6 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 
 
-<<<<<<< HEAD
-=======
-//Generate random user
-const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
->>>>>>> c7fb8f80efbbb266f6a414abb2405b0dbf419a9a
 
 const sleepRepo = new SleepRepo(allSleepData);
 const activityRepo = new ActivityRepo(activityData, userData);
