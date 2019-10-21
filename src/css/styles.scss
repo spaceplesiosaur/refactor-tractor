@@ -100,7 +100,7 @@ canvas {
   .data-article {
     font-weight: 300;
     font-weight: .8em;
-    margin: 40px 0px;
+    margin-top: 12px;
     text-align: center;
 
     .data-text {
@@ -108,14 +108,25 @@ canvas {
     }
 
     .subtext {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       margin: 5px;
       color: $text-color;
     }
+
+
+  }
+  .number-of-steps-day-article {
+    height: 64px;
   }
 
+  h4 {
+    font-size: 1.3em;
+  }
 
+  h5 {
+    font-size: 1.3em;
+  }
 }
 
 
@@ -155,7 +166,7 @@ canvas {
 
 .img-medium {
   opacity: 0.6;
-  width: 80px;
+  width: 40px;
 }
 
 .separator {
@@ -168,7 +179,7 @@ canvas {
 
 .border {
   border-right: 2px solid #5C75DA;
-  height: 100px;
+  height: 120px;
   margin-top: 15px;
 }
 
