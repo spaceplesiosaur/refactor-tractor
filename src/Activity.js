@@ -16,10 +16,9 @@ class Activity {
     var specificUser = this.findUser()
     return [...specificUser].splice(-7 * week, 7).map(day => day.date);
   }
-
-  returnNumStepsDay(date) {
+  returnUserDataForDay(date, relevantProperty) {
     let specificUser = this.findUser();
-    return specificUser.find(day => day.date === date).numSteps;
+    return specificUser.find(day => day.date === date)[relevantProperty];
   }
 
   returnMilesWalked() {
@@ -27,40 +26,12 @@ class Activity {
     return Number((this.user.strideLength * specificUser[specificUser.length - 1].numSteps / 5280).toFixed(2))
   }
 
-  returnMinutesActive(date) {
-    let specificUser = this.findUser();
-    return specificUser.find(day => day.date === date).minutesActive;
-  }
-
-  returnFlightsOfStairs(date) {
-    let specificUser = this.findUser();
-    return specificUser.find(day => day.date === date).flightsOfStairs;
-  }
-
-  returnAverageMinutesActiveForWeek(week) {
+  returnAverageDataForWeek(week, relevantProperty) {
     let specificUser = this.findUser();
     let weekOfData = this.returnWeekOfData(week, specificUser);
     return Math.floor(weekOfData.reduce((totalMinutes, eachDay) => {
-      totalMinutes += eachDay.minutesActive
+      totalMinutes += eachDay[relevantProperty]
       return totalMinutes
-    }, 0) / 7)
-  }
-
-  returnAverageStepsForWeek(week) {
-    let specificUser = this.findUser();
-    let weekOfData = this.returnWeekOfData(week, specificUser);
-    return Math.floor(weekOfData.reduce((totalSteps, eachDay) => {
-      totalSteps += eachDay.numSteps
-      return totalSteps
-    }, 0) / 7)
-  }
-
-  returnAverageStairsForWeek(week) {
-    let specificUser = this.findUser();
-    let weekOfData = this.returnWeekOfData(week, specificUser);
-    return Math.floor(weekOfData.reduce((totalStairs, eachDay) => {
-      totalStairs += eachDay.flightsOfStairs
-      return totalStairs
     }, 0) / 7)
   }
 
