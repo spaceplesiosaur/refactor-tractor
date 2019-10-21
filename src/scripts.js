@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 
 import UserRepo from "./UserRepo";
@@ -24,10 +23,7 @@ const user = new User(userData[uniqueUserIndex]);
 let hydrationData;
 let hydration;
 
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-                                          .then(response => response.json())
-                                          .then(data => hydrationData = data.hydrationData)
-                                          .then(() => hydration = new Hydration(hydrationData, user.id))
+
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
@@ -107,6 +103,8 @@ $(document).ready(function () {
   $('.date').text(`${formattedDate}`);
 
   //Hydration
+
+  function hydrationDOM() {
   $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
 
   const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
@@ -142,8 +140,14 @@ $(document).ready(function () {
         }]
       }
     }
-  });
+  })
+};
 
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+                                          .then(response => response.json())
+                                          .then(data => hydrationData = data.hydrationData)
+                                          .then(() => hydration = new Hydration(hydrationData, user.id))
+                                          .then(() => hydrationDOM())
   //Sleep
   $('.hours-slept-day').text(`${sleep.returnSleepHours(date)} hours | ${sleep.returnSleepQuality(date)} quality`);
 
