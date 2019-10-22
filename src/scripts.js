@@ -97,7 +97,7 @@ $(document).ready(function () {
   }
 
   //User Section
-  $('.username').text(`${user.returnUserName()}`)
+  $('.username').text(`${user.returnUserName()}!`)
 
   //Date Section
   $('.date').text(`${formattedDate}`);
