@@ -15,7 +15,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   margin: 0px;
   min-width: 320px;
-  padding: 10px;
 }
 
 canvas {
@@ -68,9 +67,6 @@ canvas {
 
 
 .grid {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  // grid-template-rows: auto;
   align-content: space-around; 
   display: flex;
   flex-direction: column;
@@ -86,10 +82,7 @@ canvas {
   padding: 15px 15px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  // width: 95%;
-  
   width: 30%;
-  // flex-grow: inherit;
 
 
   &:hover {
@@ -120,8 +113,6 @@ canvas {
       margin: 5px;
       color: $text-color;
     }
-
-
   }
   .number-of-steps-day-article {
     height: 60px;
@@ -135,16 +126,6 @@ canvas {
     font-size: 1.3em;
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 .water-consumed {
   margin: 5px;
@@ -162,14 +143,6 @@ canvas {
 .number-of-steps-goal {
   margin-top: 10px;
 }
-
-// ul {
-//   // list-style: none;
-// }
-
-// img {
-//   width: 10%;
-// }
 
 .img-medium {
   opacity: 0.6;
