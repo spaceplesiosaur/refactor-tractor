@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  background-color: rgb(198, 199, 207);
+  background-color: $background-color;
   font-family: 'Open Sans', sans-serif;
   margin: 0px;
   min-width: 320px;
@@ -27,11 +27,8 @@ canvas {
   margin-bottom: 10px;
 
   .logo {
-    align-items: center;
     display: inline-block;
-    font-size: 20px;
     margin: 0px;
-    width: 83%;
   }
 
   h2 {
@@ -54,8 +51,11 @@ canvas {
   }
 
   .welcome-message {
-    border-radius: 3px;
-    margin: 15px 3px 10px 3px;
+    display: inline-block;
+    font-size: 3em;
+    // border-radius: 3px;
+    // margin: 15px 3px 10px 400px;
+    margin: 0px 0 0 25%;
     padding: 3px 15px;
     text-align: left;
   }
@@ -63,6 +63,11 @@ canvas {
   .username {
     font-weight: 600;
   }
+
+  img[alt~="FitLit"]{
+    height: 80px;
+  }
+
 }
 
 
