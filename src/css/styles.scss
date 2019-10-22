@@ -1,3 +1,5 @@
+@import '/_variable.scss';
+
 html {
   box-sizing: border-box
 }
@@ -36,12 +38,12 @@ canvas {
   h2 {
     font-size: 2em;
     font-weight: 300;
-    color: #5C75DA;
+    color: $text-color;
     letter-spacing: .9px
   }
 
   .date {
-    background-color: #5C75DA;
+    background-color: $text-color;
     border-radius: 3px;
     float: right;
     font-size: 10px;
@@ -98,14 +100,14 @@ canvas {
     margin: 0px 0px 15px 0px;
     font-size: 1.5em;
     font-weight: 200;
-    color: #5C75DA;
+    color: $text-color;
     letter-spacing: 1px;
   }
 
   .data-article {
     font-weight: 300;
     font-weight: .8em;
-    margin: 40px 0px;
+    margin-top: 12px;
     text-align: center;
 
     .data-text {
@@ -113,14 +115,25 @@ canvas {
     }
 
     .subtext {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       margin: 5px;
-      color: #5C75DA;
+      color: $text-color;
     }
+
+
+  }
+  .number-of-steps-day-article {
+    height: 60px;
   }
 
-  
+  h4 {
+    font-size: 1.3em;
+  }
+
+  h5 {
+    font-size: 1.3em;
+  }
 }
 
 
@@ -160,7 +173,7 @@ canvas {
 
 .img-medium {
   opacity: 0.6;
-  width: 80px;
+  width: 40px;
 }
 
 .separator {
@@ -173,7 +186,7 @@ canvas {
 
 .border {
   border-right: 2px solid #5C75DA;
-  height: 100px;
+  height: 120px;
   margin-top: 15px;
 }
 

@@ -9,9 +9,8 @@ class SleepRepo {
       return totalQuality;
     }, 0) / this.sleepData.length).toFixed(1));
   }
-
-  returnAboveAverageSleepers(week) {
-    let dataByUser = this.sleepData.reduce((arr, user) => {
+  returnDataByUser() {
+    return this.sleepData.reduce((arr, user) => {
       if (!arr[user.userID - 1]) {
         arr[user.userID - 1] = [user];
       } else {
@@ -19,11 +18,21 @@ class SleepRepo {
       }
       return arr;
     }, []);
+  }
 
-    let avgSleepQualityPerUser = dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalQuality, day) => {
-      totalQuality += day.sleepQuality;
-      return totalQuality;
-    }, 0)).map(user => Number((user / 7).toFixed(2)));
+  returnAvgSleepDataPerUser(week, relevantProperty) {
+    let dataByUser = this.returnDataByUser();
+
+    return dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalAcc, day)  => {
+       totalAcc += day[relevantProperty];
+      return totalAcc;
+    }, 0))
+  };
+
+  returnAboveAverageSleepers(week) {
+    let dataByUser = this.returnDataByUser();
+
+    let avgSleepQualityPerUser = this.returnAvgSleepDataPerUser(1, 'sleepQuality').map(user => Number((user / 7).toFixed(2)));
 
     let goodSleepers = [];
     avgSleepQualityPerUser.forEach((user, index) => {
@@ -40,20 +49,11 @@ class SleepRepo {
     return sortedSleepers.filter(day => day.hoursSlept === sortedSleepers[0].hoursSlept).map(user => user.userID);
   }
 
-  returnWeeklyLongestSleepers(week) {
-    let dataByUser = this.sleepData.reduce((arr, user) => {
-      if (!arr[user.userID - 1]) {
-        arr[user.userID - 1] = [user];
-      } else {
-        arr[user.userID - 1].push(user);
-      }
-      return arr;
-    }, []);
+  returnWeeklyLongestSleepers(week, relevantData) {
+    let dataByUser = this.returnDataByUser();
 
-    let avgSleepHoursPerUser = dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalHours, day) => {
-      totalHours += day.hoursSlept;
-      return totalHours;
-    }, 0));
+    let avgSleepHoursPerUser = this.returnAvgSleepDataPerUser(week, 'hoursSlept')
+
     return [Math.max(...avgSleepHoursPerUser), avgSleepHoursPerUser.indexOf(Math.max(...avgSleepHoursPerUser)) + 1];
   }
 }
