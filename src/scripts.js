@@ -328,6 +328,11 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
 
 })
 
+function dataSlashFormat() {
+    let formDate = $('#date-form').val();
+    let formDateSlash = formDate.replace('-','/');
+    return formDateSlash.replace('-','/')
+  }
 
 $('#form').click((event) => {
   if (event.target.id === 'log-button') {
@@ -379,7 +384,16 @@ $('#form').click((event) => {
 
   if (event.target.id === 'submit-form' && $('#hours-slept-form').length > 0){
     event.preventDefault();
-    $.post( "https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData", {userID: user.id, date: $('#date-form').val(), hoursSlept: $('#hours-slept-form').val(), sleepQuality: $('#sleep-quality-form').val()})
+
+
+
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+method: 'POST',
+headers: {
+'Content-Type': "application/json"
+},
+body: JSON.stringify({userID: user.id, date: dataSlashFormat(), hoursSlept: $('#hours-slept-form').val(), sleepQuality: $('#sleep-quality-form').val()})
+})
   }
 
 
