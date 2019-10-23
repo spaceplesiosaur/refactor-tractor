@@ -6,15 +6,18 @@ import userData from '../data/users-test-data';
 
 import Activity from '../src/Activity';
 import User from '../src/User';
+import StatsParent from '../src/StatsParent';
 
 
 describe('Activity', () => {
   let user;
   let activity;
+  let statsParent;
 
   beforeEach(() => {
-    user = new User(userData[0])
-    activity = new Activity(activityData, user)
+    statsParent = new StatsParent();
+    user = new User(userData[0]);
+    activity = new Activity(activityData, user);
   });
 
   it('should be a function', () => {
@@ -30,7 +33,15 @@ describe('Activity', () => {
   });
 
   it('should return the number of steps for specific user for a specific day', () => {
-    expect(activity.returnUserDataForDay("2019/06/17", 'numSteps')).to.equal(14329);
+    expect(activity.returnUserDataForDay(activityData, user.id, "2019/06/17", 'numSteps')).to.equal(14329);
+  });
+
+  // it('should return the number of steps for specific user for a specific day', () => {
+  //   expect(activity.returnUserDataForDay("2019/06/17", 'numSteps')).to.equal(14329);
+  // });
+
+  it.only('should return the number of steps for specific user for a specific day', () => {
+    expect(activity.returnUserDataForDay(activityData, user.id, "2019/06/17", 'numSteps')).to.equal(14329);
   });
 
   it('should return the miles walked by a specific user for a specific day', () => {
