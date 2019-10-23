@@ -327,3 +327,86 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
   $('.increasing-stairs').html(`${insertStairStreak()}`);
 
 })
+
+function dataSlashFormat() {
+    let formDate = $('#date-form').val();
+    let formDateSlash = formDate.replace('-','/');
+    return formDateSlash.replace('-','/')
+  }
+
+$('#form').click((event) => {
+  if (event.target.id === 'log-button') {
+      $('#log-buttons').toggle()
+  }
+
+  if (event.target.id === 'log-sleep') {
+    $('#log-form').html(
+    `<form action="" target="_blank" data-category="sleep">
+        Date:<br>
+        <input id="date-form" type="date" name="date">
+        <br>
+        Hours Slept:<br>
+        <input id="hours-slept-form" type="number" name="hours-slept" value="">
+        <br>Sleep Quality:<br>
+        <input id="sleep-quality-form" type="number" name="sleep-quality" value="">
+        <br><br>
+        <input id="submit-form" type="submit" value="Submit">
+      </form>`)
+  }
+
+  if (event.target.id === 'log-activity') {
+    $('#log-form').html(`<form action="" target="_blank">
+        Date:<br>
+        <input id="date-form" type="date" name="date">
+        <br>
+        Number of Steps:<br>
+        <input id="number-steps-form" type="number" name="numbers-of-steps" value="">
+        <br>Minutes Active:<br>
+        <input id="minutes-active-form" type="number" name="minutes-active" value="">
+        <br>FLights of Stairs:<br>
+        <input id="flights-stairs-form" type="number" name="minutes-active" value="">
+        <br><br>
+        <input id="submit-form" type="submit" value="Submit">
+      </form>`)
+  }
+
+  if (event.target.id === 'log-hydration') {
+    $('#log-form').html(`<form action="" target="_blank">
+        Date:<br>
+        <input id="date-form" type="date" name="date">
+        <br>
+        Number of Ounces:<br>
+        <input id="ounces-form" type="number" name="ounces">
+        <br><br>
+        <input id="submit-form" type="submit" value="Submit">
+      </form>`)
+  }
+
+  if (event.target.id === 'submit-form' && $('#hours-slept-form').length > 0){
+    event.preventDefault();
+
+
+
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+method: 'POST',
+headers: {
+'Content-Type': "application/json"
+},
+body: JSON.stringify({userID: user.id, date: dataSlashFormat(), hoursSlept: $('#hours-slept-form').val(), sleepQuality: $('#sleep-quality-form').val()})
+})
+  }
+
+
+if (event.target.id === 'submit-form' && $('number-steps-form').length > 0){
+  event.preventDefault();
+  $.post()
+}
+
+
+if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
+  event.preventDefault();
+  $.post()
+}
+
+
+})
