@@ -10,15 +10,27 @@ import ActivityRepo from "./ActivityRepo";
 
 import activityData from "../data/activity";
 import allSleepData from "../data/sleep";
-import userData from "../data/users";
 
-//Generate random user
+let userData;
+let userRepo;
+let user;
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
-//Repo variables
-const userRepo = new UserRepo(userData);
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+.then(response => response.json())
+.then(data => userData = data.userData)
+.then(() => {
+userRepo = new UserRepo(userData);
+user = new User(userData[uniqueUserIndex]);
+})
+.then(() => all())
 
-const user = new User(userData[uniqueUserIndex]);
+
+//Generate random user
+
+
+//Repo variables
+
 
 let hydrationData;
 let hydration;
@@ -42,7 +54,7 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 
 
-
+function all() {
 const sleepRepo = new SleepRepo(allSleepData);
 const activityRepo = new ActivityRepo(activityData, userData);
 
@@ -410,3 +422,4 @@ if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
 
 
 })
+}
