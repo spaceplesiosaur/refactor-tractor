@@ -62,14 +62,6 @@ describe('Sleep', () => {
     expect(sleep.returnSleepData('2019/06/15', 'sleepQuality')).to.equal(2.2);
   });
 
-  // it('should return how many hours slept for a specific day', () => {
-  //   expect(sleep.returnSleepHours('2019/06/15')).to.equal(6.1);
-  // });
-  //
-  // it('should return sleep quality for a specific day', () => {
-  //   expect(sleep.returnSleepQuality('2019/06/15')).to.equal(2.2);
-  // });
-
   it('should return hours slept each day for week for a specific user', () => {
     expect(fullSleep.returnWeekOfSleepData(2, 'hoursSlept')).to.eql([7.3, 5.1, 8.6, 10.5, 9.1, 6.5, 6.8]);
   });
@@ -77,13 +69,5 @@ describe('Sleep', () => {
   it('should return hours slept each day for week for a specific user', () => {
     expect(fullSleep.returnWeekOfSleepData(2, 'sleepQuality')).to.eql([4.8, 4.7, 3.7, 1.8, 1.5, 4.2, 2]);
   });
-
-  // it('should return hours slept each day for week for a specific user', () => {
-  //   expect(fullSleep.returnWeekOfSleepHours(2)).to.eql([7.3, 5.1, 8.6, 10.5, 9.1, 6.5, 6.8]);
-  // });
-  //
-  // it('should return hours slept each day for week for a specific user', () => {
-  //   expect(fullSleep.returnWeekOfSleepQuality(2)).to.eql([4.8, 4.7, 3.7, 1.8, 1.5, 4.2, 2]);
-  // });
 
 });
