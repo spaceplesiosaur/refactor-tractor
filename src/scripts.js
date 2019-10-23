@@ -1,3 +1,4 @@
+
 import $ from 'jquery';
 
 import UserRepo from "./UserRepo";
@@ -11,19 +12,7 @@ import ActivityRepo from "./ActivityRepo";
 import activityData from "../data/activity";
 import allSleepData from "../data/sleep";
 import userData from "../data/users";
-
-//Generate random user
-const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
-
-//Repo variables
-const userRepo = new UserRepo(userData);
-
-const user = new User(userData[uniqueUserIndex]);
-
-let hydrationData;
-let hydration;
-
-
+import hydrationData from "../data/hydration";
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
@@ -42,13 +31,17 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 
 
+//Generate random user 
+const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
+//Repo variables
+const userRepo = new UserRepo(userData);
 const sleepRepo = new SleepRepo(allSleepData);
 const activityRepo = new ActivityRepo(activityData, userData);
 
 //Individual Class Repos
-
-
+const user = new User(userData[uniqueUserIndex]);
+const hydration = new Hydration(hydrationData, user.id);
 const sleep = new Sleep(allSleepData, user.id);
 const activity = new Activity(activityData, user);
 
@@ -73,7 +66,7 @@ function dropYear(dates) {
 }
 $(document).ready(function () {
 
-  //Packery Items
+  //Packery Items 
   // let $grid = $('.grid').packery({
   //   itemSelector: '.grid-item',
   //   columnWidth: 30,
@@ -103,8 +96,6 @@ $(document).ready(function () {
   $('.date').text(`${formattedDate}`);
 
   //Hydration
-
-  function hydrationDOM() {
   $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
 
   const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
@@ -140,44 +131,38 @@ $(document).ready(function () {
         }]
       }
     }
-  })
-};
+  });
 
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-                                          .then(response => response.json())
-                                          .then(data => hydrationData = data.hydrationData)
-                                          .then(() => hydration = new Hydration(hydrationData, user.id))
-                                          .then(() => hydrationDOM())
   //Sleep
-  $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
+  $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepQuality(date, 'sleepQuality')} quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {
       labels: dropYear(sleep.returnWeek(1)),
       datasets: [{
-        data: sleep.returnWeekOfSleepData(1, 'hoursSlept'),
+        data: sleep.returnWeekOfSleepHours(1),
         label: "Sleep Hours",
         borderColor: "rgba(92, 117, 218, 0.6)",
         fill: false,
         lineTension: 0.1
       },
       {
-        data: Array(7).fill(sleep.returnAvgSleepData('hoursSlept')),
+        data: Array(7).fill(sleep.returnAvgSleepHours()),
         label: "Average Hours of Sleep",
         borderColor: "rgba(92, 117, 218, 0.6)",
         fill: false,
         borderDash: [10, 5]
       },
       {
-        data: sleep.returnWeekOfSleepData(1, 'sleepQuality'),
+        data: sleep.returnWeekOfSleepQuality(1),
         label: "Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.6)",
         fill: false,
         lineTension: 0.1
       },
       {
-        data: Array(7).fill(sleep.returnAvgSleepData('sleepQuality')),
+        data: Array(7).fill(sleep.returnAvgSleepQuality()),
         label: "Average Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.6)",
         fill: false,
@@ -259,28 +244,28 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
       if (value === 0) {
         circle.setText('');
       } else {
-        circle.setText(`${activity.returnUserDataForDay(date, 'numSteps')} steps`);
+        circle.setText(`${activity.returnNumStepsDay(date)} steps`);
       }
 
     }
   });
 
-  let percentSteps = activity.returnUserDataForDay(date, 'numSteps') / user.dailyStepGoal;
+  let percentSteps = activity.returnNumStepsDay(date) / user.dailyStepGoal;
   bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
   $('.number-of-steps-goal').text(`Step Goal: ${user.dailyStepGoal}`);
   $('.avg-number-of-steps-goal').text(`Average Step Goal: ${userRepo.returnAverageStepGoal()}`);
-  $('.number-of-minutes-active-day').text(`${activity.returnUserDataForDay(date, 'minutesActive')}`);
+  $('.number-of-minutes-active-day').text(`${activity.returnMinutesActive(date)}`);
   $('.average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
-  $('.distance').text(`${activity.returnUserDataForDay(date, 'numSteps')}`);
+  $('.distance').text(`${activity.returnNumStepsDay(date)}`);
   $('.average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
-  $('.stairs').text(`${activity.returnUserDataForDay(date, 'flightsOfStairs')}`);
+  $('.stairs').text(`${activity.returnFlightsOfStairs(date)}`);
   $('.average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
   $('.distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
   $('.most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} minutes`);
-  $('.week-review-minutes').text(`${activity.returnAverageDataForWeek(1, 'minutesActive')} minutes active`);
-  $('.week-review-steps').text(`${activity.returnAverageDataForWeek(1, 'numSteps')} steps taken`);
-  $('.week-review-stairs').text(`${activity.returnAverageDataForWeek(1, 'flightsOfStairs')} flights of stairs`);
+  $('.week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} minutes active`);
+  $('.week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} steps taken`);
+  $('.week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} flights of stairs`);
 
   // Friends
 

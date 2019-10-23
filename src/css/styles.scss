@@ -42,9 +42,10 @@ canvas {
     background-color: $text-color;
     border-radius: 3px;
     float: right;
-    font-size: 10px;
+    font-size: .65em;
     margin: 5px 5px;
     padding: 3px 5px;
+    position: relative;
     width: 175px;
     color: #EAEBEF;
     font-weight: 600;
@@ -53,9 +54,7 @@ canvas {
   .welcome-message {
     display: inline-block;
     font-size: 3em;
-    // border-radius: 3px;
-    // margin: 15px 3px 10px 400px;
-    margin: 0px 0 0 25%;
+    margin: auto auto;
     padding: 3px 15px;
     text-align: left;
   }
