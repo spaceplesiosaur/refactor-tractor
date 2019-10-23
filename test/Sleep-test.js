@@ -53,13 +53,6 @@ describe('Sleep', () => {
   it('should return the average sleep quality over all time for a single user', () => {
     expect(sleep.returnAvgSleepData('sleepQuality')).to.equal(2.53);
   });
-  // it('should return the average sleep hours for a single user over all time', () => {
-  //   expect(sleep.returnAvgSleepHours()).to.equal(7.66);
-  // });
-  //
-  // it('should return the average sleep quality over all time for a single user', () => {
-  //   expect(sleep.returnAvgSleepQuality()).to.equal(2.53);
-  // });
 
   it('should return how many hours slept for a specific day', () => {
     expect(sleep.returnSleepData('2019/06/15', 'hoursSlept')).to.equal(6.1);
