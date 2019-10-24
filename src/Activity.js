@@ -7,51 +7,31 @@ class Activity extends StatsParent {
     this.user = user;
   }
 
-  findUser() {
-    return this.activityData.filter(person => person.userID === this.user.id);
-  }
-
-  returnWeekOfData(week, userData) {
-    return [...userData].splice((-7 * week), 7);
-  }
-
-  returnWeek(week) {
-    var specificUser = this.findUser()
-    return [...specificUser].splice(-7 * week, 7).map(day => day.date);
-  }
-  // returnUserDataForDay(date, relevantProperty) {
-  //   let specificUser = this.findUser();
-  //   return specificUser.find(day => day.date === date)[relevantProperty];
-  // }
-
-  returnMilesWalked() {
-    let specificUser = this.findUser();
+  returnMilesWalked(id) {
+    let specificUser = this.findUser(this.activityData, id);
     return Number((this.user.strideLength * specificUser[specificUser.length - 1].numSteps / 5280).toFixed(2))
   }
 
-  returnAverageDataForWeek(week, relevantProperty) {
-    let specificUser = this.findUser();
+  returnAverageDataForWeek(week, relevantProperty, id) {
+    let specificUser = this.findUser(this.activityData, id)
     let weekOfData = this.returnWeekOfData(week, specificUser);
-    return Math.floor(weekOfData.reduce((totalMinutes, eachDay) => {
-      totalMinutes += eachDay[relevantProperty]
-      return totalMinutes
-    }, 0) / 7)
+    return this.getAverageFromDataList(weekOfData, relevantProperty)
   }
 
-  metStepGoal(date) {
-    let specificUser = this.findUser();
+  metStepGoal(date, id) {
+    let specificUser = this.findUser(this.activityData, id)
     let numSteps = specificUser.find(day => day.date === date).numSteps
     return numSteps >= this.user.dailyStepGoal
   }
 
-  returnAllStepGoalDays() {
-    let specificUser = this.findUser();
+  returnAllStepGoalDays(id) {
+    let specificUser = this.findUser(this.activityData, id)
     let stepGoal = this.user.dailyStepGoal;
     return specificUser.filter(day => day.numSteps >= stepGoal).map(day => day.date);
   }
 
-  returnStepRecord() {
-    let specificUser = this.findUser();
+  returnStepRecord(id) {
+    let specificUser = this.findUser(this.activityData, id)
     return [...specificUser].sort((a, b) => b.flightsOfStairs - a.flightsOfStairs)[0].flightsOfStairs
   }
 
@@ -69,8 +49,8 @@ class Activity extends StatsParent {
     return [stepObj, this.user.friends[totalStepsPerFriend.indexOf(Math.max(...totalStepsPerFriend))]]
   }
 
-  returnThreeDayStepStreak() {
-    let specificUser = this.findUser().reverse();
+  returnThreeDayStepStreak(id) {
+    let specificUser = this.findUser(this.activityData, id).reverse();
     let dates = [];
     specificUser.some((user, i, specificUser) => {
       if (specificUser[i].numSteps < specificUser[i + 1].numSteps && specificUser[i + 1].numSteps < specificUser[i + 2].numSteps) {
@@ -84,8 +64,8 @@ class Activity extends StatsParent {
     return dates;
   }
 
-  returnTwoDayStairStreak() {
-    var specificUser = this.findUser().reverse();
+  returnTwoDayStairStreak(id) {
+    let specificUser = this.findUser(this.activityData, id).reverse();
     let dates = [];
     specificUser.some((user, i, specificUser) => {
       if (specificUser[i].flightsOfStairs > specificUser[i + 1].flightsOfStairs) {
@@ -97,8 +77,6 @@ class Activity extends StatsParent {
 
     return dates;
   }
-
-
 }
 
 export default Activity;
