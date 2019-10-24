@@ -161,11 +161,10 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
                                           .then(() => hydrationDOM())
   //Sleep
   $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
-
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {
-      labels: dropYear(sleep.returnWeek(1, allSleepData, this.userID)),
+      labels: dropYear(sleep.returnWeek(1, allSleepData, user.id)),
       datasets: [{
         data: sleep.returnWeekOfSleepData(1, 'hoursSlept'),
         label: "Sleep Hours",
