@@ -1,16 +1,16 @@
-class ActivityRepo {
+import StatsParent from "./StatsParent";
+
+class ActivityRepo extends StatsParent {
   constructor(activityData, userData) {
+    super();
     this.activityData = activityData;
     this.userData = userData;
   }
 
-  returnAverage(date, property) {
+  returnAverage(date, relevantProperty) {
     let amountPerDay = this.activityData.filter(day => day.date === date);
 
-    return Number((amountPerDay.reduce((total, day) => {
-      total += day[property];
-      return total;
-    }, 0) / amountPerDay.length).toFixed(0));
+    return this.getAverageFromDataList(amountPerDay, relevantProperty)
   }
 
   returnMostActive() {

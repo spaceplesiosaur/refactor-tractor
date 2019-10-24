@@ -39,7 +39,6 @@ class StatsParent {
     let specificUser = this.findUser(userData, id);
     return this.returnWeekOfData(numWeeks, specificUser).map(day => day[relevantProperty]);
   }
-
 }
 
 

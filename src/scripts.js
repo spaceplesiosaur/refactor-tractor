@@ -271,28 +271,28 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
       if (value === 0) {
         circle.setText('');
       } else {
-        circle.setText(`${activity.returnUserDataForDay(date, 'numSteps')} steps`);
+        circle.setText(`${activity.returnUserDataForDay(activityData, user.id, date, 'numSteps')} steps`);
       }
 
     }
   });
 
-  let percentSteps = activity.returnUserDataForDay(date, 'numSteps') / user.dailyStepGoal;
+  let percentSteps = activity.returnUserDataForDay(activityData, user.id, date, 'numSteps') / user.dailyStepGoal;
   bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
   $('.number-of-steps-goal').text(`Step Goal: ${user.dailyStepGoal}`);
   $('.avg-number-of-steps-goal').text(`Average Step Goal: ${userRepo.returnAverageStepGoal()}`);
-  $('.number-of-minutes-active-day').text(`${activity.returnUserDataForDay(date, 'minutesActive')}`);
+  $('.number-of-minutes-active-day').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'minutesActive')}`);
   $('.average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
-  $('.distance').text(`${activity.returnUserDataForDay(date, 'numSteps')}`);
+  $('.distance').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'numSteps')}`);
   $('.average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
-  $('.stairs').text(`${activity.returnUserDataForDay(date, 'flightsOfStairs')}`);
+  $('.stairs').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'flightsOfStairs')}`);
   $('.average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
-  $('.distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
+  $('.distance-in-miles').text(`${activity.returnMilesWalked(user.id)} Miles`);
   $('.most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} minutes`);
-  $('.week-review-minutes').text(`${activity.returnAverageDataForWeek(1, 'minutesActive')} minutes active`);
-  $('.week-review-steps').text(`${activity.returnAverageDataForWeek(1, 'numSteps')} steps taken`);
-  $('.week-review-stairs').text(`${activity.returnAverageDataForWeek(1, 'flightsOfStairs')} flights of stairs`);
+  $('.week-review-minutes').text(`${activity.returnAverageDataForWeek(1, 'minutesActive', user.id)} minutes active`);
+  $('.week-review-steps').text(`${activity.returnAverageDataForWeek(1, 'numSteps', user.id)} steps taken`);
+  $('.week-review-stairs').text(`${activity.returnAverageDataForWeek(1, 'flightsOfStairs', user.id)} flights of stairs`);
 
   // Friends
 
