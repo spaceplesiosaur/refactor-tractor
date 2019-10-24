@@ -23,7 +23,7 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
 userRepo = new UserRepo(userData);
 user = new User(userData[uniqueUserIndex]);
 })
-.then(() => all())
+.then(() => {activityFetch(), all()})
 
 
 //Generate random user
@@ -31,12 +31,20 @@ user = new User(userData[uniqueUserIndex]);
 
 //Repo variables
 
-
+let date;
 let hydrationData;
 let hydration;
-// let activityData;
-// let activity;
+let activityData;
+let activity;
+let activityRepo;
 
+// const activityRepo = new ActivityRepo(activityData, userData);
+
+//Individual Class Repos
+
+
+
+// const activity = new Activity(activityData, user);
 
 
 // An example of how you tell webpack to use a CSS (SCSS) file
@@ -55,21 +63,29 @@ import './images/screencapture.png'
 import './images/stopwatch.svg'
 import './images/trophy.svg'
 
+function activityFetch() {
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+  .then(response => response.json())
+  .then(data => {
+    activityData = data.activityData;
+    activity = new Activity(activityData, user.id);
+    activityRepo = new ActivityRepo(activityData, userData);
+    date = activityData.reverse()[0].date;
+    console.log(date)
+  })
+}
 
 function all() {
 const sleepRepo = new SleepRepo(allSleepData);
-// const activityRepo = new ActivityRepo(activityData, userData);
-
-//Individual Class Repos
-
-
 const sleep = new Sleep(allSleepData, user.id);
-// const activity = new Activity(activityData, user);
+
+
+
 
 
 
 //Date
-const date = activityData.reverse()[0].date;
+
 // let date;
 const dateObject = new Date(date);
 const options = {
@@ -78,6 +94,8 @@ const options = {
   month: 'long',
   day: 'numeric'
 };
+
+
 
 const formattedDate = dateObject.toLocaleString('en', options)
 
@@ -159,13 +177,16 @@ $(document).ready(function () {
     }
   })
 };
-
+function hydrationFetch() {
 fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
                                           .then(response => response.json())
                                           .then(data => hydrationData = data.hydrationData)
                                           .then(() => hydration = new Hydration(hydrationData, user.id))
                                           .then(() => hydrationDOM())
+                                        }
   //Sleep
+
+
   $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
@@ -301,14 +322,15 @@ function activityDOM() {
 };
 
 
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-    .then(response => response.json())
-    .then(data => {
-      let activityData = data.activityData;
-      let activity = new Activity(activityData, user.id);
-      let activityRepo = new ActivityRepo(activityData, userData);
-    })
-    .then(activityDom());
+  // fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     activityData = data.activityData;
+  //     activity = new Activity(activityData, user.id);
+  //     activityRepo = new ActivityRepo(activityData, userData);
+  //     date = activityData.reverse()[0].date;
+  //   })
+  //   .then(activityDom());
 
 
   // Friends
