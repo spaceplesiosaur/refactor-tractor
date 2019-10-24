@@ -34,7 +34,7 @@ describe('Hydration', () => {
   });
 
   it('should return the dates for the last week', () => {
-    expect(hydration.returnWeek()).to.eql(
+    expect(hydration.returnHydrationWeek(1,hydrationData, 2)).to.eql(
       [
         "2019/06/16",
         "2019/06/17",
@@ -47,15 +47,15 @@ describe('Hydration', () => {
   });
 
   it('should return the average fluid ounces for a user for all time', () => {
-    expect(hydration.returnAverageFluidOunces()).to.equal(62);
+    expect(hydration.returnAverageFluidOunces(hydrationData, 2)).to.equal('70.50');
   });
 
   it('should return the amount of fluid ounces consumed on a specific date for a specific person', () => {
-    expect(hydration.returnDailyFluidOunces('2019/06/15')).to.equal(37);
+    expect(hydration.returnDailyFluidOunces(hydrationData, 2, '2019/06/20', 'numOunces')).to.equal(71);
   });
 
   it('should return the amount of ounces consumed for one person over a week', () => {
-    expect(hydration.returnWeeklyNumOunces(1)).to.eql([69, 96, 61, 91, 50, 50, 43]);
+    expect(hydration.returnWeeklyNumOunces(1, hydrationData, 2, 'numOunces')).to.eql([91, 96, 70, 76, 71, 27, 58]);
   });
 
 
