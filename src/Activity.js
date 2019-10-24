@@ -19,10 +19,10 @@ class Activity extends StatsParent {
     var specificUser = this.findUser()
     return [...specificUser].splice(-7 * week, 7).map(day => day.date);
   }
-  // returnUserDataForDay(date, relevantProperty) {
-  //   let specificUser = this.findUser();
-  //   return specificUser.find(day => day.date === date)[relevantProperty];
-  // }
+  returnUserDataForDay(date, relevantProperty) {
+    let specificUser = this.findUser();
+    return specificUser.find(day => day.date === date)[relevantProperty];
+  }
 
   returnMilesWalked() {
     let specificUser = this.findUser();

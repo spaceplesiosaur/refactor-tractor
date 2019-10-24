@@ -8,7 +8,7 @@ import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
 
-import activityData from "../data/activity";
+// import activityData from "../data/activity";
 import allSleepData from "../data/sleep";
 
 let userData;
@@ -34,6 +34,8 @@ user = new User(userData[uniqueUserIndex]);
 
 let hydrationData;
 let hydration;
+// let activityData;
+// let activity;
 
 
 
@@ -56,16 +58,19 @@ import './images/trophy.svg'
 
 function all() {
 const sleepRepo = new SleepRepo(allSleepData);
-const activityRepo = new ActivityRepo(activityData, userData);
+// const activityRepo = new ActivityRepo(activityData, userData);
 
 //Individual Class Repos
 
 
 const sleep = new Sleep(allSleepData, user.id);
-const activity = new Activity(activityData, user);
+// const activity = new Activity(activityData, user);
+
+
 
 //Date
 const date = activityData.reverse()[0].date;
+// let date;
 const dateObject = new Date(date);
 const options = {
   weekday: 'long',
@@ -240,7 +245,7 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
   $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
 
   //Activity Section
-
+function activityDOM() {
   var bar = new ProgressBar.Circle('.number-of-steps-day', {
     color: '#aaa',
     svgStyle: {
@@ -293,6 +298,18 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
   $('.week-review-minutes').text(`${activity.returnAverageDataForWeek(1, 'minutesActive')} minutes active`);
   $('.week-review-steps').text(`${activity.returnAverageDataForWeek(1, 'numSteps')} steps taken`);
   $('.week-review-stairs').text(`${activity.returnAverageDataForWeek(1, 'flightsOfStairs')} flights of stairs`);
+};
+
+
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+    .then(response => response.json())
+    .then(data => {
+      let activityData = data.activityData;
+      let activity = new Activity(activityData, user.id);
+      let activityRepo = new ActivityRepo(activityData, userData);
+    })
+    .then(activityDom());
+
 
   // Friends
 
@@ -422,4 +439,5 @@ if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
 
 
 })
+
 }
