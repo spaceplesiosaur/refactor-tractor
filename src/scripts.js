@@ -32,9 +32,10 @@ user = new User(userData[uniqueUserIndex]);
 //Repo variables
 
 
+
+
 let hydrationData;
 let hydration;
-
 
 
 // An example of how you tell webpack to use a CSS (SCSS) file
@@ -52,6 +53,7 @@ import './images/road.svg'
 import './images/screencapture.png'
 import './images/stopwatch.svg'
 import './images/trophy.svg'
+
 
 
 function all() {
@@ -117,49 +119,49 @@ $(document).ready(function () {
   //Hydration
 
   function hydrationDOM() {
-  $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
+    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
 
-  const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
-    type: 'horizontalBar',
-    data: {
-      labels: dropYear(hydration.returnWeek()),
-      datasets: [{
-        data: hydration.returnWeeklyNumOunces(),
-        backgroundColor: [
-          'rgba(92, 117, 218, 0.6)',
-          'rgba(242, 188, 51, 0.6)',
-          'rgba(126, 221, 255, 0.6)',
-          'rgba(92, 117, 218, 0.6)',
-          'rgba(242, 188, 51, 0.6)',
-          'rgba(126, 221, 255, 0.6)',
-          'rgba(92, 117, 218, 0.6)'
-        ],
-      }]
-    },
-    options: {
-      legend: {
-        display: false,
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: '# of Ounces'
-          }
+    const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
+      type: 'horizontalBar',
+      data: {
+        labels: dropYear(hydration.returnWeek()),
+        datasets: [{
+          data: hydration.returnWeeklyNumOunces(),
+          backgroundColor: [
+            'rgba(92, 117, 218, 0.6)',
+            'rgba(242, 188, 51, 0.6)',
+            'rgba(126, 221, 255, 0.6)',
+            'rgba(92, 117, 218, 0.6)',
+            'rgba(242, 188, 51, 0.6)',
+            'rgba(126, 221, 255, 0.6)',
+            'rgba(92, 117, 218, 0.6)'
+          ],
         }]
+      },
+      options: {
+        legend: {
+          display: false,
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: '# of Ounces'
+            }
+          }]
+        }
       }
-    }
-  })
-};
+    })
+  };
 
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-                                          .then(response => response.json())
-                                          .then(data => hydrationData = data.hydrationData)
-                                          .then(() => hydration = new Hydration(hydrationData, user.id))
-                                          .then(() => hydrationDOM())
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+    .then(response => response.json())
+    .then(data => hydrationData = data.hydrationData)
+    .then(() => hydration = new Hydration(hydrationData, user.id))
+    .then(() => hydrationDOM())
   //Sleep
   $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
 
@@ -337,8 +339,8 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
   }
 
   $('.increasing-stairs').html(`${insertStairStreak()}`);
-
 })
+
 
 function dataSlashFormat() {
     let formDate = $('#date-form').val();
@@ -419,7 +421,5 @@ if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
   event.preventDefault();
   $.post()
 }
-
-
 })
 }
