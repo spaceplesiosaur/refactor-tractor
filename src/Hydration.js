@@ -7,10 +7,6 @@ class Hydration extends StatsParent {
     this.userID = userID;
   }
 
-  // findUser() {
-  //   return this.hydrationData.filter(user => user.userID === this.userID);
-  // }
-
   returnHydrationWeek(weekNum, data, id) {
     return this.returnWeek(weekNum, data, id)
   }
@@ -26,7 +22,6 @@ class Hydration extends StatsParent {
   returnWeeklyNumOunces(numWeeks, userData, id, relevantProperty) {
     return this.returnWeekOfSpecificData(numWeeks, userData, id, relevantProperty)
   }
-
 }
 
 

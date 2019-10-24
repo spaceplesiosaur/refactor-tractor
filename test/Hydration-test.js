@@ -57,7 +57,4 @@ describe('Hydration', () => {
   it('should return the amount of ounces consumed for one person over a week', () => {
     expect(hydration.returnWeeklyNumOunces(1, hydrationData, 2, 'numOunces')).to.eql([91, 96, 70, 76, 71, 27, 58]);
   });
-
-
-
 })
