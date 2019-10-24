@@ -415,9 +415,15 @@ if (event.target.id === 'submit-form' && $('number-steps-form').length > 0){
 }
 
 
-if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
+if (event.target.id === 'submit-form' && $('#ounces-form').length > 0){
   event.preventDefault();
-  $.post()
+  
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+    method: 'POST',
+    headers: {'Content-Type': "application/json"},
+    body: JSON.stringify({userID: user.id, date: dataSlashFormat(), numOunces: $('#ounces-form').val()})
+  })
+
 }
 })
 }
