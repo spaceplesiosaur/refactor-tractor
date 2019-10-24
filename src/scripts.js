@@ -11,8 +11,31 @@ import ActivityRepo from "./ActivityRepo";
 
 import activityData from "../data/activity";
 import allSleepData from "../data/sleep";
-import userData from "../data/users";
-import hydrationData from "../data/hydration";
+
+let userData;
+let userRepo;
+let user;
+const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
+
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+.then(response => response.json())
+.then(data => userData = data.userData)
+.then(() => {
+userRepo = new UserRepo(userData);
+user = new User(userData[uniqueUserIndex]);
+})
+.then(() => all())
+
+
+//Generate random user
+
+
+//Repo variables
+
+
+let hydrationData;
+let hydration;
+
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
@@ -31,11 +54,9 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 
 
-//Generate random user 
-const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
-//Repo variables
-const userRepo = new UserRepo(userData);
+
+function all() {
 const sleepRepo = new SleepRepo(allSleepData);
 const activityRepo = new ActivityRepo(activityData, userData);
 
@@ -310,5 +331,90 @@ $(document).ready(function () {
   }
 
   $('.increasing-stairs').html(`${insertStairStreak()}`);
+})
+
+
+function dataSlashFormat() {
+    let formDate = $('#date-form').val();
+    let formDateSlash = formDate.replace('-','/');
+    return formDateSlash.replace('-','/')
+  }
+
+$('#form').click((event) => {
+  if (event.target.id === 'log-button') {
+      $('#log-buttons').toggle()
+  }
+
+  if (event.target.id === 'log-sleep') {
+    $('#log-form').html(
+    `<form action="" target="_blank" data-category="sleep">
+        Date:<br>
+        <input id="date-form" type="date" name="date">
+        <br>
+        Hours Slept:<br>
+        <input id="hours-slept-form" type="number" name="hours-slept" value="">
+        <br>Sleep Quality:<br>
+        <input id="sleep-quality-form" type="number" name="sleep-quality" value="">
+        <br><br>
+        <input id="submit-form" type="submit" value="Submit">
+      </form>`)
+  }
+
+  if (event.target.id === 'log-activity') {
+    $('#log-form').html(`<form action="" target="_blank">
+        Date:<br>
+        <input id="date-form" type="date" name="date">
+        <br>
+        Number of Steps:<br>
+        <input id="number-steps-form" type="number" name="numbers-of-steps" value="">
+        <br>Minutes Active:<br>
+        <input id="minutes-active-form" type="number" name="minutes-active" value="">
+        <br>FLights of Stairs:<br>
+        <input id="flights-stairs-form" type="number" name="minutes-active" value="">
+        <br><br>
+        <input id="submit-form" type="submit" value="Submit">
+      </form>`)
+  }
+
+  if (event.target.id === 'log-hydration') {
+    $('#log-form').html(`<form action="" target="_blank">
+        Date:<br>
+        <input id="date-form" type="date" name="date">
+        <br>
+        Number of Ounces:<br>
+        <input id="ounces-form" type="number" name="ounces">
+        <br><br>
+        <input id="submit-form" type="submit" value="Submit">
+      </form>`)
+  }
+
+  if (event.target.id === 'submit-form' && $('#hours-slept-form').length > 0){
+    event.preventDefault();
+
+
+
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+method: 'POST',
+headers: {
+'Content-Type': "application/json"
+},
+body: JSON.stringify({userID: user.id, date: dataSlashFormat(), hoursSlept: $('#hours-slept-form').val(), sleepQuality: $('#sleep-quality-form').val()})
+})
+  }
+
+
+if (event.target.id === 'submit-form' && $('number-steps-form').length > 0){
+  event.preventDefault();
+  $.post()
+}
+
+
+if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
+  event.preventDefault();
+  $.post()
+}
+
 
 })
+}
+>>>>>>> c73580f307350ad9fbcea78293edcc24ea4f814f
