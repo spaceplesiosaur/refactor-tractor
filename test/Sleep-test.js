@@ -35,7 +35,7 @@ describe('Sleep', () => {
   });
 
   it('should return an array of dates for any desired week', () => {
-    expect(sleep.returnWeek(1)).to.eql([
+    expect(sleep.returnWeek(1, sleepData, user.id)).to.eql([
       "2019/06/19",
       "2019/06/20",
       "2019/06/21",
