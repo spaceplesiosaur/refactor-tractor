@@ -35,6 +35,9 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
      activity = new Activity(activityData, user);
      activityRepo = new ActivityRepo(activityData, userData);
      date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
+     if (new Date(date) > new Date('2020/01/22')) {
+       date = '2020/01/22';
+     }
    })
  }
 
