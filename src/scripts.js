@@ -421,8 +421,5 @@ if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
   event.preventDefault();
   $.post()
 }
-
-
 })
 }
->>>>>>> c73580f307350ad9fbcea78293edcc24ea4f814f
