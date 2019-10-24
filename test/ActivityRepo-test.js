@@ -20,15 +20,15 @@ describe('ActivityRepo', () => {
   });
 
   it('should return the average number of stair climbed for all users for a specific date', () => {
-    expect(activityRepo.returnAverage("2019/06/15", 'flightsOfStairs')).to.equal(21);
+    expect(activityRepo.returnAverage("2019/06/15", 'flightsOfStairs')).to.equal(20.8);
   });
 
   it('should return the average number of steps for all users taken for a specific date', () => {
-    expect(activityRepo.returnAverage("2019/06/15", 'numSteps')).to.equal(6027);
+    expect(activityRepo.returnAverage("2019/06/15", 'numSteps')).to.equal(6026.6);
   });
 
   it('should return the average minutes active for a specific date for all users', () => {
-    expect(activityRepo.returnAverage("2019/06/15", 'minutesActive')).to.equal(144);
+    expect(activityRepo.returnAverage("2019/06/15", 'minutesActive')).to.equal(144.2);
   });
 
   it('should return the highest minutes active of all time', () => {
