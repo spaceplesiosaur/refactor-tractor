@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>Activity Tracker</title>
-  <!-- <link rel="stylesheet" href="normalize.css"> -->
-  <!-- <link rel="stylesheet" href="styles.css"> -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.7.0/dist/progressbar.js"></script>
-
 </head>
-
 <body>
   <header class="welcome-section">
     <h1 class="logo"><img src="./images/logo.png" alt="FitLit logo"></h1>
     <h2 class="welcome-message">Welcome, <span class="username"></span></h2>
-    <h2 class="date"></h2>
-    
+    <h2 class="date"></h2>  
   </header>
   <main class="grid">
     <section class="data-section hydration grid-item draggable" tabindex="0">
@@ -57,7 +51,6 @@
       <article class="data-article number-of-steps-day-article">
         <p class="number-of-steps-day"></p>
       </article>
-
       <article class="data-article number-of-minutes-active-day-article">
         <p class="subtext">TODAY</p>
         <div class="separator">
@@ -74,7 +67,6 @@
           </aside>
         </div>
       </article>
-
       <article class="data-article distance-comparison">
         <img class="img-medium" src="./images/footsteps-silhouette-variant.svg" alt="road">
         <div class="separator">
@@ -91,7 +83,6 @@
           </aside>
         </div>
       </article>
-
       <article class="data-article stairs-comparison">
         <img class="img-medium" src="./images/goal.svg" alt="road">
         <div class="separator">
@@ -141,8 +132,6 @@
       </article>
     </section>
   </main>
-
-
   <script src="https://unpkg.com/packery@2.1/dist/packery.pkgd.min.js"></script>
   <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
 </body>
