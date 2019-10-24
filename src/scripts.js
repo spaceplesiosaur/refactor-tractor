@@ -63,7 +63,6 @@ const activityRepo = new ActivityRepo(activityData, userData);
 
 const sleep = new Sleep(allSleepData, user.id);
 const activity = new Activity(activityData, user);
-
 //Date
 const date = activityData.reverse()[0].date;
 const dateObject = new Date(date);
@@ -166,7 +165,7 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData'
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {
-      labels: dropYear(sleep.returnWeek(1)),
+      labels: dropYear(sleep.returnWeek(1, allSleepData, this.userID)),
       datasets: [{
         data: sleep.returnWeekOfSleepData(1, 'hoursSlept'),
         label: "Sleep Hours",
