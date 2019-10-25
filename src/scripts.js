@@ -118,14 +118,14 @@ $(document).ready(function () {
   //Hydration
 
   function hydrationDOM() {
-    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
+    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(hydrationData, user.id, date, 'numOunces')} ounces \n\n`);
 
     const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
       type: 'horizontalBar',
       data: {
-        labels: dropYear(hydration.returnWeek()),
+        labels: dropYear(hydration.returnHydrationWeek(1, hydrationData, user.id)),
         datasets: [{
-          data: hydration.returnWeeklyNumOunces(),
+          data: hydration.returnWeeklyNumOunces(1,hydrationData, user.id, 'numOunces'),
           backgroundColor: [
             'rgba(92, 117, 218, 0.6)',
             'rgba(242, 188, 51, 0.6)',
