@@ -160,8 +160,10 @@ $(document).ready(function () {
     .then(response => response.json())
     .then(data => hydrationData = data.hydrationData)
     .then(() => hydration = new Hydration(hydrationData, user.id))
-    .then(() => hydrationDOM())
+    .then(() => hydrationDOM());
+
   //Sleep
+  
   $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
