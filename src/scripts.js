@@ -8,11 +8,11 @@ import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
 
-import activityData from "../data/activity";
-import allSleepData from "../data/sleep";
-
+let activityData;
 let userData;
 let userRepo;
+let activityRepo;
+let activity;
 let user;
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
@@ -23,21 +23,32 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
 userRepo = new UserRepo(userData);
 user = new User(userData[uniqueUserIndex]);
 })
-.then(() => all())
+.then(() => {activityFetch(),setTimeout(all, 100)})
 
 
 //Generate random user
+function activityFetch() {
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+.then(response => response.json())
+.then(data => activityData = data.activityData)
+.then(() => {
+     activity = new Activity(activityData, user);
+     activityRepo = new ActivityRepo(activityData, userData);
+     date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
+     if (new Date(date) > new Date('2020/01/22')) {
+       date = '2020/01/22';
+     }
+   })
+ }
 
 
-//Repo variables
 
-
-
-
+let date;
 let hydrationData;
 let hydration;
-
-
+let sleep;
+let sleepRepo;
+let allSleepData;
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
 import './css/styles.scss';
@@ -57,16 +68,15 @@ import './images/trophy.svg'
 
 
 function all() {
-const sleepRepo = new SleepRepo(allSleepData);
-const activityRepo = new ActivityRepo(activityData, userData);
+console.log(activity)
 
 //Individual Class Repos
 
+//Repo variables
 
-const sleep = new Sleep(allSleepData, user.id);
-const activity = new Activity(activityData, user);
-//Date
-const date = activityData.reverse()[0].date;
+
+
+
 const dateObject = new Date(date);
 const options = {
   weekday: 'long',
@@ -160,10 +170,17 @@ $(document).ready(function () {
     .then(response => response.json())
     .then(data => hydrationData = data.hydrationData)
     .then(() => hydration = new Hydration(hydrationData, user.id))
-    .then(() => hydrationDOM());
+    .then(() => hydrationDOM())
 
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+      .then(response => response.json())
+      .then(data => allSleepData = data.sleepData)
+      .then(() => {sleep = new Sleep(allSleepData, user.id)
+                  sleepRepo = new SleepRepo(allSleepData)
+      })
+      .then(() => sleepDOM())
   //Sleep
-
+  function sleepDOM() {
   $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
@@ -240,7 +257,7 @@ $(document).ready(function () {
   });
 
   $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
-
+}
   //Activity Section
 
   var bar = new ProgressBar.Circle('.number-of-steps-day', {
@@ -287,6 +304,7 @@ $(document).ready(function () {
   $('.number-of-minutes-active-day').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'minutesActive')}`);
   $('.average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
   $('.distance').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'numSteps')}`);
+  console.log(date)
   $('.average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
   $('.stairs').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'flightsOfStairs')}`);
   $('.average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
