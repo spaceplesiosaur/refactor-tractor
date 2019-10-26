@@ -1,36 +1,27 @@
-class Hydration {
+import StatsParent from "./StatsParent";
+
+class Hydration extends StatsParent {
   constructor(hydrationData, userID) {
+    super()
     this.hydrationData = hydrationData;
     this.userID = userID;
   }
 
-  findUser() {
-    return this.hydrationData.filter(user => user.userID === this.userID);
+  returnHydrationWeek(weekNum, data, id) {
+    return this.returnWeek(weekNum, data, id)
   }
 
-  returnWeek() {
-    var specificUser = this.findUser()
-    return [...specificUser].splice(-7).map(day => day.date);
+  returnAverageFluidOunces(userData, id) {
+    return this.returnAvgData(userData, id, 'numOunces').toFixed(2)
   }
 
-  returnAverageFluidOunces() {
-    var specificUser = this.findUser()
-    return Math.floor(specificUser.reduce((totalOunces, dailyOunces) => {
-      totalOunces += dailyOunces.numOunces;
-      return totalOunces;
-    }, 0) / specificUser.length);
+  returnDailyFluidOunces(userData, id, date, relevantProperty) {
+    return this.returnUserDataForDay(userData, id, date, relevantProperty)
   }
 
-  returnDailyFluidOunces(date) {
-    var specificUser = this.findUser()
-    return specificUser.find(ounces => ounces.date === date).numOunces
+  returnWeeklyNumOunces(numWeeks, userData, id, relevantProperty) {
+    return this.returnWeekOfSpecificData(numWeeks, userData, id, relevantProperty)
   }
-
-  returnWeeklyNumOunces() {
-    var specificUser = this.findUser()
-    return specificUser.slice(-7).map(day => day.numOunces);
-  }
-
 }
 
 

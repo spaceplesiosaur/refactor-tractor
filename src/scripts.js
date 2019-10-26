@@ -118,14 +118,14 @@ $(document).ready(function () {
   //Hydration
 
   function hydrationDOM() {
-    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
+    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(hydrationData, user.id, date, 'numOunces')} ounces \n\n`);
 
     const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
       type: 'horizontalBar',
       data: {
-        labels: dropYear(hydration.returnWeek()),
+        labels: dropYear(hydration.returnHydrationWeek(1, hydrationData, user.id)),
         datasets: [{
-          data: hydration.returnWeeklyNumOunces(),
+          data: hydration.returnWeeklyNumOunces(1,hydrationData, user.id, 'numOunces'),
           backgroundColor: [
             'rgba(92, 117, 218, 0.6)',
             'rgba(242, 188, 51, 0.6)',
@@ -160,8 +160,10 @@ $(document).ready(function () {
     .then(response => response.json())
     .then(data => hydrationData = data.hydrationData)
     .then(() => hydration = new Hydration(hydrationData, user.id))
-    .then(() => hydrationDOM())
+    .then(() => hydrationDOM());
+
   //Sleep
+
   $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
@@ -428,9 +430,15 @@ $('#form').click((event) => {
   }
 
 
-  if (event.target.id === 'submit-form' && $('ounces-form').length > 0) {
-    event.preventDefault();
-    $.post()
-  }
+if (event.target.id === 'submit-form' && $('#ounces-form').length > 0){
+  event.preventDefault();
+
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+    method: 'POST',
+    headers: {'Content-Type': "application/json"},
+    body: JSON.stringify({userID: user.id, date: dataSlashFormat(), numOunces: $('#ounces-form').val()})
+  })
+
+}
 })
 }
