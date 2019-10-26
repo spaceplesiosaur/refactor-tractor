@@ -128,14 +128,14 @@ $(document).ready(function () {
   //Hydration
 
   function hydrationDOM() {
-    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
+    $('.water-consumed').text(`${hydration.returnDailyFluidOunces(hydrationData, user.id, date, 'numOunces')} ounces \n\n`);
 
     const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
       type: 'horizontalBar',
       data: {
-        labels: dropYear(hydration.returnWeek()),
+        labels: dropYear(hydration.returnHydrationWeek(1, hydrationData, user.id)),
         datasets: [{
-          data: hydration.returnWeeklyNumOunces(),
+          data: hydration.returnWeeklyNumOunces(1,hydrationData, user.id, 'numOunces'),
           backgroundColor: [
             'rgba(92, 117, 218, 0.6)',
             'rgba(242, 188, 51, 0.6)',
@@ -368,12 +368,12 @@ function dataSlashFormat() {
 
 $('#form').click((event) => {
   if (event.target.id === 'log-button') {
-      $('#log-buttons').toggle()
+    $('#log-buttons').toggle()
   }
 
   if (event.target.id === 'log-sleep') {
     $('#log-form').html(
-    `<form action="" target="_blank" data-category="sleep">
+      `<form action="" target="_blank" data-category="sleep">
         Date:<br>
         <input id="date-form" type="date" name="date">
         <br>
@@ -414,30 +414,49 @@ $('#form').click((event) => {
       </form>`)
   }
 
-  if (event.target.id === 'submit-form' && $('#hours-slept-form').length > 0){
+  if (event.target.id === 'submit-form' && $('#hours-slept-form').length > 0) {
     event.preventDefault();
-
-
-
     fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
-method: 'POST',
-headers: {
-'Content-Type': "application/json"
-},
-body: JSON.stringify({userID: user.id, date: dataSlashFormat(), hoursSlept: $('#hours-slept-form').val(), sleepQuality: $('#sleep-quality-form').val()})
-})
+      method: 'POST',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        userID: user.id,
+        date: dataSlashFormat(),
+        hoursSlept: $('#hours-slept-form').val(),
+        sleepQuality: $('#sleep-quality-form').val()
+      })
+    })
+  }
+
+  if (event.target.id === 'submit-form' && $('#number-steps-form').length > 0) {
+    event.preventDefault();
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        userID: user.id,
+        date: dataSlashFormat(),
+        numSteps: $('#number-steps-form').val(),
+        minutesActive: $('#minutes-active-form').val(),
+        flightsOfStairs: $('#flights-stairs-form').val(),
+      })
+    })
   }
 
 
-if (event.target.id === 'submit-form' && $('number-steps-form').length > 0){
+if (event.target.id === 'submit-form' && $('#ounces-form').length > 0){
   event.preventDefault();
-  $.post()
-}
 
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+    method: 'POST',
+    headers: {'Content-Type': "application/json"},
+    body: JSON.stringify({userID: user.id, date: dataSlashFormat(), numOunces: $('#ounces-form').val()})
+  })
 
-if (event.target.id === 'submit-form' && $('ounces-form').length > 0){
-  event.preventDefault();
-  $.post()
 }
 })
 }
