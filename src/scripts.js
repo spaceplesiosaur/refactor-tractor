@@ -23,7 +23,7 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
 userRepo = new UserRepo(userData);
 user = new User(userData[uniqueUserIndex]);
 })
-.then(() => {activityFetch(),setTimeout(all, 100)})
+.then(() => {activityFetch(),setTimeout(all, 300)})
 
 
 //Generate random user
