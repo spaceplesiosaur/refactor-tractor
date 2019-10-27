@@ -8,42 +8,60 @@ import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
 
-let activityData;
-let userData;
-let userRepo;
-let activityRepo;
-let activity;
-let user;
+//Generate random user
+
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-.then(response => response.json())
-.then(data => userData = data.userData)
-.then(() => {
-userRepo = new UserRepo(userData);
-user = new User(userData[uniqueUserIndex]);
-})
-.then(() => {activityFetch(),setTimeout(all, 100)})
+// fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+//    .then(response => response.json())
+//    .then(data => {
+//      const userData = data.userData;
+//      const userRepo = new UserRepo(userData);
+//      const user = new User(userData[uniqueUserIndex]);
+//      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+//       .then(response => response.json())
+//       .then(data => {
+//           const activityData = data.activityData
+//           const activity = new Activity(activityData, user);
+//           const activityRepo = new ActivityRepo(activityData, userData);
+//           const date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
+//           if (new Date(date) > new Date('2020/01/22')) {
+//             date = '2020/01/22';
+//           }
+//           all(userData, userRepo, user, activityData, activity, activityRepo, date);
+//         })
+//    })
 
-
-//Generate random user
-function activityFetch() {
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-.then(response => response.json())
-.then(data => activityData = data.activityData)
-.then(() => {
-     activity = new Activity(activityData, user);
-     activityRepo = new ActivityRepo(activityData, userData);
-     date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
-     if (new Date(date) > new Date('2020/01/22')) {
-       date = '2020/01/22';
-     }
+const userFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+   .then(response => response.json())
+   .then(data => {
+     return data.userData
    })
- }
+   .catch(data => console.log('Fetch error - user data. User may not be defined.', data))
+
+ const activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+   .then(response => response.json())
+   .then(data => {
+     return data.activityData
+   })
+   .catch(data => console.log('Fetch error - activity data. Date may not be defined.', data))
 
 
+ Promise.all([userFetch, activityFetch]).then((requiredData) => {
+   const userData = requiredData[0];
+   const userRepo = new UserRepo(userData);
+   const user = new User(userData[uniqueUserIndex]);
+   const activityData = requiredData[1];
+   const activity = new Activity(activityData, user);
+   const activityRepo = new ActivityRepo(activityData, userData);
+   const date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
+    if (new Date(date) > new Date('2020/01/22')) {
+      date = '2020/01/22';
+    }
+    all(userData, userRepo, user, activityData, activity, activityRepo, date);
+ })
 
-let date;
+
 let hydrationData;
 let hydration;
 let sleep;
@@ -67,15 +85,12 @@ import './images/trophy.svg'
 
 
 
-function all() {
-console.log(activity)
+function all(userData, userRepo, user, activityData, activity, activityRepo, date) {
+
 
 //Individual Class Repos
 
 //Repo variables
-
-
-
 
 const dateObject = new Date(date);
 const options = {
@@ -297,6 +312,8 @@ $(document).ready(function () {
   });
 
   let percentSteps = activity.returnUserDataForDay(activityData, user.id, date, 'numSteps') / user.dailyStepGoal;
+  console.log('BLAH', activity.returnUserDataForDay(activityData, user.id, date, 'numSteps'))
+  console.log('BLAH2', user.dailyStepGoal)
   bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
   $('.number-of-steps-goal').text(`Step Goal: ${user.dailyStepGoal}`);
@@ -334,9 +351,9 @@ $(document).ready(function () {
 
   // Challenges
 
-  function insertStepStreak() {
+  function insertStepStreak(id) {
     let list = `<ul class="steps_ul">`
-    activity.returnThreeDayStepStreak().forEach(day => {
+    activity.returnThreeDayStepStreak(id).forEach(day => {
       list += `<li class="date_li">
              <p class="dates"> ${day}`
     })
@@ -344,11 +361,11 @@ $(document).ready(function () {
     return list;
   }
 
-  $('.increasing-steps').html(`${insertStepStreak()}`);
+  $('.increasing-steps').html(`${insertStepStreak(user.id)}`);
 
-  function insertStairStreak() {
+  function insertStairStreak(id) {
     let list = `<ul class="stairs_ul">`
-    activity.returnTwoDayStairStreak().forEach(day => {
+    activity.returnTwoDayStairStreak(id).forEach(day => {
       list += `<li class="date_li">
              <p class="dates"> ${day}`
     })
@@ -356,7 +373,7 @@ $(document).ready(function () {
     return list;
   }
 
-  $('.increasing-stairs').html(`${insertStairStreak()}`);
+  $('.increasing-stairs').html(`${insertStairStreak(user.id)}`);
 })
 
 
