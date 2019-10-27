@@ -1,0 +1,44 @@
+@mixin buttons($button-color, $text, $text-size) {
+  // background-color: #9dacea;
+  background-color: $button-color;
+  color: $text;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: $text-size;
+  font-weight: bold;
+  &:hover {
+       background-color: $text-color;
+     }
+  &:active {
+       background-color: white;
+     }
+}
+
+.log-button {
+  @include buttons($neutral-color, white, 1.1em);
+  margin-left: .5em;
+}
+
+.hide {
+  display: none;
+}
+
+#log-hydration {
+  @include buttons($hydration-color, black, 1em);
+  margin-left: 0;
+}
+
+#log-sleep {
+  @include buttons($sleep-color, black, 1em);
+  margin-left: 0;
+}
+
+#log-activity {
+  @include buttons($activity-color, black, 1em);
+  margin-left: 0;
+  // margin-right: .5em;
+}
+
+#submit-form {
+  @extend .log-button;
+}
