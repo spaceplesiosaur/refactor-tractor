@@ -34,34 +34,6 @@ describe('Sleep', () => {
     expect(sleep.userID).to.equal(user.id);
   });
 
-  it('should return an array of dates for any desired week', () => {
-    expect(sleep.returnWeek(1, sleepData, user.id)).to.eql([
-      "2019/06/19",
-      "2019/06/20",
-      "2019/06/21",
-      "2019/06/22",
-      "2019/06/23",
-      "2019/06/24",
-      "2019/06/25",
-    ]);
-  });
-
-  it('should return the average sleep hours for a single user over all time', () => {
-    expect(sleep.returnAvgSleepData('hoursSlept')).to.equal(7.66);
-  });
-
-  it('should return the average sleep quality over all time for a single user', () => {
-    expect(sleep.returnAvgSleepData('sleepQuality')).to.equal(2.53);
-  });
-
-  it('should return how many hours slept for a specific day', () => {
-    expect(sleep.returnSleepData('2019/06/15', 'hoursSlept')).to.equal(6.1);
-  });
-
-  it('should return sleep quality for a specific day', () => {
-    expect(sleep.returnSleepData('2019/06/15', 'sleepQuality')).to.equal(2.2);
-  });
-
   it('should return hours slept each day for week for a specific user', () => {
     expect(fullSleep.returnWeekOfSleepData(2, 'hoursSlept')).to.eql([7.3, 5.1, 8.6, 10.5, 9.1, 6.5, 6.8]);
   });

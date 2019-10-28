@@ -32,20 +32,9 @@ describe('Activity', () => {
     expect(activity.activityData).to.eql(activityData);
   });
 
-  it('should return the number of steps for specific user for a specific day', () => {
-    expect(activity.returnUserDataForDay(activityData, user.id, "2019/06/17", 'numSteps')).to.equal(14329);
-  });
 
   it('should return the miles walked by a specific user for a specific day', () => {
     expect(activity.returnMilesWalked(user.id)).to.equal(6.60);
-  });
-
-  it('should return number of flights of stairs climbed by a specific user for a specific day', () => {
-    expect(activity.returnUserDataForDay(activityData, user.id, "2019/06/17", 'flightsOfStairs', user.id)).to.equal(18);
-  });
-
-  it('should return the minutes active for a day', () => {
-    expect(activity.returnUserDataForDay(activityData, user.id, "2019/06/26", 'minutesActive')).to.equal(219);
   });
 
   it('should return the average minutes active for a week', () => {

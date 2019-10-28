@@ -4,7 +4,7 @@ class Sleep extends StatsParent{
     super();
     this.sleepData = sleepData;
     this.userID = userID;
-    this.finder = this.findUser(this.sleepData,this.userID)
+    this.finder = this.findUser(this.sleepData, this.userID)
   }
 
   returnAvgSleepData(relevantProperty) {
