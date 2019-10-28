@@ -12,26 +12,6 @@ import ActivityRepo from "./ActivityRepo";
 
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
-// fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-//    .then(response => response.json())
-//    .then(data => {
-//      const userData = data.userData;
-//      const userRepo = new UserRepo(userData);
-//      const user = new User(userData[uniqueUserIndex]);
-//      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-//       .then(response => response.json())
-//       .then(data => {
-//           const activityData = data.activityData
-//           const activity = new Activity(activityData, user);
-//           const activityRepo = new ActivityRepo(activityData, userData);
-//           const date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
-//           if (new Date(date) > new Date('2020/01/22')) {
-//             date = '2020/01/22';
-//           }
-//           all(userData, userRepo, user, activityData, activity, activityRepo, date);
-//         })
-//    })
-
 const userFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
    .then(response => response.json())
    .then(data => {
