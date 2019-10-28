@@ -148,34 +148,34 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
       .then(() => sleepDOM())
 
     function sleepDOM() {
-      $('.hours-slept-day').text(`${sleep.returnSleepData(date, 'hoursSlept')} hours | ${sleep.returnSleepData(date, 'sleepQuality')} quality`);
+      $('.hours-slept-day').text(`${sleep.returnUserDataForDay(allSleepData, user.id, date, 'hoursSlept')} hours | ${sleep.returnUserDataForDay(allSleepData, user.id, date, 'sleepQuality')} quality`);
       const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
         type: 'line',
         data: {
           labels: dropYear(sleep.returnWeek(1, allSleepData, user.id)),
           datasets: [{
-              data: sleep.returnWeekOfSleepData(1, 'hoursSlept'),
+              data: sleep.returnWeekOfSpecificData(1, allSleepData, user.id,'hoursSlept'),
               label: "Sleep Hours",
               borderColor: "rgba(92, 117, 218, 0.6)",
               fill: false,
               lineTension: 0.1
             },
             {
-              data: Array(7).fill(sleep.returnAvgSleepData('hoursSlept')),
+              data: Array(7).fill(sleep.getAverageFromDataList(allSleepData,'hoursSlept')),
               label: "Average Hours of Sleep",
               borderColor: "rgba(92, 117, 218, 0.6)",
               fill: false,
               borderDash: [10, 5]
             },
             {
-              data: sleep.returnWeekOfSleepData(1, 'sleepQuality'),
+              data: sleep.returnWeekOfSpecificData(1, allSleepData, user.id,'sleepQuality'),
               label: "Quality of Sleep",
               borderColor: "rgba(242, 188, 51, 0.6)",
               fill: false,
               lineTension: 0.1
             },
             {
-              data: Array(7).fill(sleep.returnAvgSleepData('sleepQuality')),
+              data: Array(7).fill(sleep.getAverageFromDataList(allSleepData,'sleepQuality')),
               label: "Average Quality of Sleep",
               borderColor: "rgba(242, 188, 51, 0.6)",
               fill: false,
@@ -222,8 +222,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
           }
         }
       });
-
-      $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
+    $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
     }
 
     var bar = new ProgressBar.Circle('.number-of-steps-day', {
@@ -263,8 +262,6 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
     });
 
     let percentSteps = activity.returnUserDataForDay(activityData, user.id, date, 'numSteps') / user.dailyStepGoal;
-    console.log('BLAH', activity.returnUserDataForDay(activityData, user.id, date, 'numSteps'))
-    console.log('BLAH2', user.dailyStepGoal)
     bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
     $('.number-of-steps-goal').text(`Step Goal: ${user.dailyStepGoal}`);
@@ -272,7 +269,6 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
     $('.number-of-minutes-active-day').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'minutesActive')}`);
     $('.average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
     $('.distance').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'numSteps')}`);
-    console.log(date)
     $('.average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
     $('.stairs').text(`${activity.returnUserDataForDay(activityData, user.id, date, 'flightsOfStairs')}`);
     $('.average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
