@@ -8,6 +8,20 @@ import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
 
+import './css/normalize.css';
+import './css/styles.scss';
+
+import './images/appointment.svg'
+import './images/drop.svg'
+import './images/footsteps-silhouette-variant.svg'
+import './images/goal.svg'
+import './images/logo.png'
+import './images/moon.svg'
+import './images/road.svg'
+import './images/screencapture.png'
+import './images/stopwatch.svg'
+import './images/trophy.svg'
+
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
 const userFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
@@ -41,28 +55,11 @@ Promise.all([userFetch, activityFetch]).then((requiredData) => {
   all(userData, userRepo, user, activityData, activity, activityRepo, date);
 })
 
-
 let hydrationData;
 let hydration;
 let sleep;
 let sleepRepo;
 let allSleepData;
-
-import './css/normalize.css';
-import './css/styles.scss';
-
-import './images/appointment.svg'
-import './images/drop.svg'
-import './images/footsteps-silhouette-variant.svg'
-import './images/goal.svg'
-import './images/logo.png'
-import './images/moon.svg'
-import './images/road.svg'
-import './images/screencapture.png'
-import './images/stopwatch.svg'
-import './images/trophy.svg'
-
-
 
 function all(userData, userRepo, user, activityData, activity, activityRepo, date) {
 
