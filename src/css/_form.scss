@@ -1,5 +1,4 @@
 @mixin buttons($button-color, $text, $text-size) {
-  // background-color: #9dacea;
   background-color: $button-color;
   color: $text;
   padding: 10px;
@@ -13,6 +12,42 @@
        background-color: white;
      }
 }
+
+@mixin input() {
+  font-size: 1.2em;
+  text-align: left;
+}
+
+#form {
+  &:active {
+       background-color: $neutral-color;
+     }
+}
+
+.label-input-box {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-input-box label {
+  @include input();
+  font-weight: bold;
+  padding: 0;
+}
+
+.label-input-box input {
+  @include input();
+  border-radius: 5px;
+  border: 1px solid $text-color;
+  padding: .5em;
+}
+
+#log-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
 
 .log-button {
   @include buttons($neutral-color, white, 1.1em);

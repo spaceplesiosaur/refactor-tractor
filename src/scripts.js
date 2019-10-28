@@ -8,42 +8,60 @@ import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
 
-let activityData;
-let userData;
-let userRepo;
-let activityRepo;
-let activity;
-let user;
+//Generate random user
+
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-.then(response => response.json())
-.then(data => userData = data.userData)
-.then(() => {
-userRepo = new UserRepo(userData);
-user = new User(userData[uniqueUserIndex]);
-})
-.then(() => {activityFetch(),setTimeout(all, 300)})
+// fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+//    .then(response => response.json())
+//    .then(data => {
+//      const userData = data.userData;
+//      const userRepo = new UserRepo(userData);
+//      const user = new User(userData[uniqueUserIndex]);
+//      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+//       .then(response => response.json())
+//       .then(data => {
+//           const activityData = data.activityData
+//           const activity = new Activity(activityData, user);
+//           const activityRepo = new ActivityRepo(activityData, userData);
+//           const date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
+//           if (new Date(date) > new Date('2020/01/22')) {
+//             date = '2020/01/22';
+//           }
+//           all(userData, userRepo, user, activityData, activity, activityRepo, date);
+//         })
+//    })
 
-
-//Generate random user
-function activityFetch() {
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-.then(response => response.json())
-.then(data => activityData = data.activityData)
-.then(() => {
-     activity = new Activity(activityData, user);
-     activityRepo = new ActivityRepo(activityData, userData);
-     date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
-     if (new Date(date) > new Date('2020/01/22')) {
-       date = '2020/01/22';
-     }
+const userFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+   .then(response => response.json())
+   .then(data => {
+     return data.userData
    })
- }
+   .catch(data => console.log('Fetch error - user data. User may not be defined.', data))
+
+ const activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+   .then(response => response.json())
+   .then(data => {
+     return data.activityData
+   })
+   .catch(data => console.log('Fetch error - activity data. Date may not be defined.', data))
 
 
+ Promise.all([userFetch, activityFetch]).then((requiredData) => {
+   const userData = requiredData[0];
+   const userRepo = new UserRepo(userData);
+   const user = new User(userData[uniqueUserIndex]);
+   const activityData = requiredData[1];
+   const activity = new Activity(activityData, user);
+   const activityRepo = new ActivityRepo(activityData, userData);
+   const date = activityData.sort((a,b) => {return new Date(b.date) - new Date(a.date) })[0].date
+    if (new Date(date) > new Date('2020/01/22')) {
+      date = '2020/01/22';
+    }
+    all(userData, userRepo, user, activityData, activity, activityRepo, date);
+ })
 
-let date;
+
 let hydrationData;
 let hydration;
 let sleep;
@@ -67,15 +85,12 @@ import './images/trophy.svg'
 
 
 
-function all() {
-console.log(activity)
+function all(userData, userRepo, user, activityData, activity, activityRepo, date) {
+
 
 //Individual Class Repos
 
 //Repo variables
-
-
-
 
 const dateObject = new Date(date);
 const options = {
@@ -297,6 +312,8 @@ $(document).ready(function () {
   });
 
   let percentSteps = activity.returnUserDataForDay(activityData, user.id, date, 'numSteps') / user.dailyStepGoal;
+  console.log('BLAH', activity.returnUserDataForDay(activityData, user.id, date, 'numSteps'))
+  console.log('BLAH2', user.dailyStepGoal)
   bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
   $('.number-of-steps-goal').text(`Step Goal: ${user.dailyStepGoal}`);
@@ -334,9 +351,9 @@ $(document).ready(function () {
 
   // Challenges
 
-  function insertStepStreak() {
+  function insertStepStreak(id) {
     let list = `<ul class="steps_ul">`
-    activity.returnThreeDayStepStreak().forEach(day => {
+    activity.returnThreeDayStepStreak(id).forEach(day => {
       list += `<li class="date_li">
              <p class="dates"> ${day}`
     })
@@ -344,11 +361,11 @@ $(document).ready(function () {
     return list;
   }
 
-  $('.increasing-steps').html(`${insertStepStreak()}`);
+  $('.increasing-steps').html(`${insertStepStreak(user.id)}`);
 
-  function insertStairStreak() {
+  function insertStairStreak(id) {
     let list = `<ul class="stairs_ul">`
-    activity.returnTwoDayStairStreak().forEach(day => {
+    activity.returnTwoDayStairStreak(id).forEach(day => {
       list += `<li class="date_li">
              <p class="dates"> ${day}`
     })
@@ -356,7 +373,7 @@ $(document).ready(function () {
     return list;
   }
 
-  $('.increasing-stairs').html(`${insertStairStreak()}`);
+  $('.increasing-stairs').html(`${insertStairStreak(user.id)}`);
 })
 
 
@@ -373,44 +390,82 @@ $('#form').click((event) => {
 
   if (event.target.id === 'log-sleep') {
     $('#log-form').html(
-      `<form action="" target="_blank" data-category="sleep">
-        Date:<br>
-        <input id="date-form" type="date" name="date">
+      `form action="" target="_blank" data-category="sleep">
+        <section class="label-input-box">
+          <label for="date" class="label" tabindex="0">Date:</label>
+          <input id="date-form" type="date" name="date" tabindex="0">
+        </section>
+        <section class="label-input-box">
+          <label for="hours-slept" tabindex="0">Hours Slept:</label>
+          <input id="hours-slept-form" type="number" name="hours-slept" value="" tabindex="0">
+        </section>
+        <section class="label-input-box" tabindex="0">
+          <label for-"sleep-quality">Sleep Quality:</label>
+          <input id="sleep-quality-form" type="number" name="sleep-quality" value="" tabindex="0">
+        </section>
         <br>
-        Hours Slept:<br>
-        <input id="hours-slept-form" type="number" name="hours-slept" value="">
-        <br>Sleep Quality:<br>
-        <input id="sleep-quality-form" type="number" name="sleep-quality" value="">
-        <br><br>
-        <input id="submit-form" type="submit" value="Submit">
+        <input id="submit-form" type="submit" value="Submit" tabindex="0">
+      </span>
+    </form>`)
+  }
+
+  if (event.target.id === 'log-sleep') {
+    $('#log-form').html(
+      `<form action="" target="_blank" data-category="sleep">
+        <section class="label-input-box">
+          <label for="date" class="label" tabindex="0">Date:</label>
+          <input id="date-form" type="date" name="date" tabindex="0">
+        </section>
+        <section class="label-input-box">
+          <label for="hours-slept" tabindex="0">Hours Slept:</label>
+          <input id="hours-slept-form" type="number" name="hours-slept" value="" tabindex="0">
+        </section>
+        <section class="label-input-box" tabindex="0">
+          <label for-"sleep-quality">Sleep Quality:</label>
+          <input id="sleep-quality-form" type="number" name="sleep-quality" value="" tabindex="0">
+        </section>
+        <br>
+        <input id="submit-form" type="submit" value="Submit" tabindex="0">
       </form>`)
   }
 
   if (event.target.id === 'log-activity') {
-    $('#log-form').html(`<form action="" target="_blank">
-        Date:<br>
-        <input id="date-form" type="date" name="date">
+    $('#log-form').html(
+      `<form action="" target="_blank" data-category="activity">
+        <section class="label-input-box">
+          <label for="date" class="label" tabindex="0">Date:</label>
+          <input id="date-form" type="date" name="date" tabindex="0">
+        </section>
+        <section class="label-input-box">
+          <label for="numbers-of-steps" tabindex="0">Number of Steps:</label>
+          <input id="number-steps-form" type="number" name="numbers-of-steps" value="" tabindex="0">
+        </section>
+        <section class="label-input-box" tabindex="0">
+          <label for-"minutes-active">Minutes Active:</label>
+          <input id="minutes-active-form" type="number" name="minutes-active" value="" tabindex="0">
+        </section>
+        <section class="label-input-box" tabindex="0">
+          <label for-"flights-of-stairs">Flights of Stairs:</label>
+          <input id="flights-stairs-form" type="number" name="flights-of-stairs" value="" tabindex="0">
+        </section>
         <br>
-        Number of Steps:<br>
-        <input id="number-steps-form" type="number" name="numbers-of-steps" value="">
-        <br>Minutes Active:<br>
-        <input id="minutes-active-form" type="number" name="minutes-active" value="">
-        <br>FLights of Stairs:<br>
-        <input id="flights-stairs-form" type="number" name="minutes-active" value="">
-        <br><br>
-        <input id="submit-form" type="submit" value="Submit">
+        <input id="submit-form" type="submit" value="Submit" tabindex="0">
       </form>`)
   }
 
   if (event.target.id === 'log-hydration') {
-    $('#log-form').html(`<form action="" target="_blank">
-        Date:<br>
-        <input id="date-form" type="date" name="date">
+    $('#log-form').html(
+      `<form action="" target="_blank" data-category="hydration">
+        <section class="label-input-box">
+          <label for="date" class="label" tabindex="0">Date:</label>
+          <input id="date-form" type="date" name="date" tabindex="0">
+        </section>
+        <section class="label-input-box">
+          <label for="ounces" tabindex="0">Number of Ounces:</label>
+          <input id="ounces-form" type="number" name="ounces" value="" tabindex="0">
+        </section>
         <br>
-        Number of Ounces:<br>
-        <input id="ounces-form" type="number" name="ounces">
-        <br><br>
-        <input id="submit-form" type="submit" value="Submit">
+        <input id="submit-form" type="submit" value="Submit" tabindex="0">
       </form>`)
   }
 
