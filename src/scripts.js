@@ -336,27 +336,6 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
 
     if (event.target.id === 'log-sleep') {
       $('#log-form').html(
-        `form action="" target="_blank" data-category="sleep">
-        <section class="label-input-box">
-          <label for="date" class="label" tabindex="0">Date:</label>
-          <input id="date-form" type="date" name="date" tabindex="0">
-        </section>
-        <section class="label-input-box">
-          <label for="hours-slept" tabindex="0">Hours Slept:</label>
-          <input id="hours-slept-form" type="number" name="hours-slept" value="" tabindex="0">
-        </section>
-        <section class="label-input-box" tabindex="0">
-          <label for-"sleep-quality">Sleep Quality:</label>
-          <input id="sleep-quality-form" type="number" name="sleep-quality" value="" tabindex="0">
-        </section>
-        <br>
-        <input id="submit-form" type="submit" value="Submit" tabindex="0">
-      </span>
-    </form>`)
-    }
-
-    if (event.target.id === 'log-sleep') {
-      $('#log-form').html(
         `<form action="" target="_blank" data-category="sleep">
         <section class="label-input-box">
           <label for="date" class="label" tabindex="0">Date:</label>
@@ -428,7 +407,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
           hoursSlept: $('#hours-slept-form').val(),
           sleepQuality: $('#sleep-quality-form').val()
         })
-      })
+      }).catch(error => console.log('There was an error submitting your sleep data', error))
     }
 
     if (event.target.id === 'submit-form' && $('#number-steps-form').length > 0) {
@@ -445,7 +424,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
           minutesActive: $('#minutes-active-form').val(),
           flightsOfStairs: $('#flights-stairs-form').val(),
         })
-      })
+      }).catch(error => console.log('There was an error submitting your activity data', error))
     }
 
 
@@ -462,7 +441,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
           date: dataSlashFormat(),
           numOunces: $('#ounces-form').val()
         })
-      })
+      }).catch(error => console.log('There was an error submitting your hydration data', error))
     }
   })
 }
