@@ -1,4 +1,8 @@
 import $ from 'jquery';
+import 'whatwg-fetch';
+//https://github.com/github/fetch
+import 'promise-polyfill/src/polyfill';
+//https://github.com/taylorhakes/promise-polyfill
 
 import UserRepo from "./UserRepo";
 import User from "./User";
