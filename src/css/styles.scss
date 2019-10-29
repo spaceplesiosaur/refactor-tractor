@@ -29,7 +29,7 @@ canvas {
   justify-content: space-between;
   margin-bottom: 10px;
   width: 100vw;
-  
+
   .logo {
     display: inline-block;
     margin: 0px;
@@ -60,7 +60,7 @@ canvas {
     @media screen and (max-width: 640px) {
       left: 15%;
       font-size: 1.3em;
-    } 
+    }
 
     @media screen and (max-width: 600px) {
       position: unset;
@@ -110,10 +110,6 @@ canvas {
     font-weight: 600;
   }
 
-  // img[alt~="FitLit"]{
-  //   // width: 100%;
-
-  // }
   @media screen and (max-width: 850px) {
     position: relative;
     margin: 0 0 50px 0;

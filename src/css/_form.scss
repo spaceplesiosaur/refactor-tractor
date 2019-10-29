@@ -57,12 +57,11 @@
 
 .hide {
   display: none;
-}
-
-.hide #log-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  #log-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 #log-hydration {
