@@ -1,4 +1,8 @@
 import $ from 'jquery';
+import 'whatwg-fetch';
+//https://github.com/github/fetch
+import 'promise-polyfill/src/polyfill';
+//https://github.com/taylorhakes/promise-polyfill
 
 import UserRepo from "./UserRepo";
 import User from "./User";
@@ -7,6 +11,20 @@ import Sleep from "./Sleep";
 import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
+
+import './css/normalize.css';
+import './css/styles.scss';
+
+import './images/appointment.svg'
+import './images/drop.svg'
+import './images/footsteps-silhouette-variant.svg'
+import './images/goal.svg'
+import './images/logo.png'
+import './images/moon.svg'
+import './images/road.svg'
+import './images/screencapture.png'
+import './images/stopwatch.svg'
+import './images/trophy.svg'
 
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
@@ -41,28 +59,11 @@ Promise.all([userFetch, activityFetch]).then((requiredData) => {
   all(userData, userRepo, user, activityData, activity, activityRepo, date);
 })
 
-
 let hydrationData;
 let hydration;
 let sleep;
 let sleepRepo;
 let allSleepData;
-
-import './css/normalize.css';
-import './css/styles.scss';
-
-import './images/appointment.svg'
-import './images/drop.svg'
-import './images/footsteps-silhouette-variant.svg'
-import './images/goal.svg'
-import './images/logo.png'
-import './images/moon.svg'
-import './images/road.svg'
-import './images/screencapture.png'
-import './images/stopwatch.svg'
-import './images/trophy.svg'
-
-
 
 function all(userData, userRepo, user, activityData, activity, activityRepo, date) {
 

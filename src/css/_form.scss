@@ -18,12 +18,6 @@
   text-align: left;
 }
 
-#form {
-  &:active {
-       background-color: $neutral-color;
-     }
-}
-
 .label-input-box {
   padding: 1em;
   display: flex;
@@ -49,27 +43,40 @@
   align-items: center;
  }
 
+.button-row {
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+}
+
 .log-button {
-  @include buttons($neutral-color, white, 1.1em);
-  margin-left: .5em;
+  @include buttons($neutral-color, white, 1em);
+  margin-left: .3em;
+  margin-right: .2em
 }
 
 .hide {
   display: none;
 }
 
+.hide #log-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 #log-hydration {
-  @include buttons($hydration-color, black, 1em);
+  @include buttons($hydration-color, black, .9em);
   margin-left: 0;
 }
 
 #log-sleep {
-  @include buttons($sleep-color, black, 1em);
+  @include buttons($sleep-color, black, .9em);
   margin-left: 0;
 }
 
 #log-activity {
-  @include buttons($activity-color, black, 1em);
+  @include buttons($activity-color, black, .9em);
   margin-left: 0;
 }
 
