@@ -51,6 +51,21 @@ canvas {
       margin-top: 75px;
       left: 25%;
     }
+
+    @media screen and (max-width: 720px) {
+      left: 20%;
+      font-size: 1.4em;
+    }
+
+    @media screen and (max-width: 640px) {
+      left: 15%;
+      font-size: 1.3em;
+    } 
+
+    @media screen and (max-width: 600px) {
+      position: unset;
+      margin: 0px;
+    }
   }
 
   .date {
@@ -75,12 +90,20 @@ canvas {
       position: relative;
       left: 0;
     }
+
+     @media screen and (max-width: 600px) {
+      left: 40%;
+    }
   }
 
   .welcome-message {
     font-size: 3em;
     padding: 3px 15px;
     text-align: left;
+
+    @media screen and (max-width: 600px) {
+      text-align: center;
+    }
   }
 
   .username {
@@ -95,8 +118,12 @@ canvas {
     position: relative;
     margin: 0 0 50px 0;
   }
-}
 
+  @media screen and (max-width: 600px) {
+    display: block;
+    text-align: center;
+  }
+}
 
 main {
   columns: 3 435px;
