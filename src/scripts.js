@@ -223,7 +223,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
           }
         }
       });
-    $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
+    $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0].toFixed(2)} hours`);
     }
 
     var bar = new ProgressBar.Circle('.number-of-steps-day', {
