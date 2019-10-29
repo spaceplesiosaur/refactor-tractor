@@ -28,7 +28,8 @@ canvas {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-
+  width: 100vw;
+  
   .logo {
     display: inline-block;
     margin: 0px;
@@ -38,7 +39,33 @@ canvas {
     font-size: 2em;
     font-weight: 300;
     color: $text-color;
-    letter-spacing: .9px
+    letter-spacing: .9px;
+
+    @media screen and (max-width: 871px) {
+      margin-top: 75px;
+      margin-bottom: 0;
+    }
+
+    @media screen and (max-width: 850px) {
+      position: absolute;
+      margin-top: 75px;
+      left: 25%;
+    }
+
+    @media screen and (max-width: 720px) {
+      left: 20%;
+      font-size: 1.4em;
+    }
+
+    @media screen and (max-width: 640px) {
+      left: 15%;
+      font-size: 1.3em;
+    } 
+
+    @media screen and (max-width: 600px) {
+      position: unset;
+      margin: 0px;
+    }
   }
 
   .date {
@@ -46,30 +73,57 @@ canvas {
     border-radius: 3px;
     font-size: 10px;
     margin: 5px 5px;
-    padding: 3px 5px;
+    padding: 4px 5px;
     position: relative;
-    width: 185px;
+    width: 175px;
     height: 16px;
     color: #EAEBEF;
     font-weight: 600;
+
+    @media screen and (max-width: 871px) {
+      padding: 4px 5px;
+      height: 32px;
+      width: 105px;
+    }
+
+    @media screen and (max-width: 850px) {
+      position: relative;
+      left: 0;
+    }
+
+     @media screen and (max-width: 600px) {
+      left: 40%;
+    }
   }
 
   .welcome-message {
     font-size: 3em;
     padding: 3px 15px;
     text-align: left;
+
+    @media screen and (max-width: 600px) {
+      text-align: center;
+    }
   }
 
   .username {
     font-weight: 600;
   }
 
-  img[alt~="FitLit"]{
-    width: 100%;
+  // img[alt~="FitLit"]{
+  //   // width: 100%;
 
+  // }
+  @media screen and (max-width: 850px) {
+    position: relative;
+    margin: 0 0 50px 0;
+  }
+
+  @media screen and (max-width: 600px) {
+    display: block;
+    text-align: center;
   }
 }
-
 
 main {
   columns: 3 435px;

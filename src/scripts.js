@@ -89,7 +89,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
       return userData.find(user => user.id === id).name;
     }
 
-    $('.username').text(`${user.returnUserName()}`)
+    $('.username').text(`${user.returnUserName()}!`)
 
     $('.date').text(`${formattedDate}`);
 
