@@ -2,6 +2,17 @@
 
 This project is a fit-bit like application that utilizes a dataset of 50 people and records their Sleep, Activity, Hydration, and Personal data, then displays them on a website. 
 
+For the second part of the project, the code was refactored to make user of class inheritance, fetch calls, and accessibility practices.
+
+The changes that were made were:
+
+1. The creation of a parent class, which contained methods that were used in multiple classes.
+
+2. The addition of fetch calls to get data from a server, and add data to data list with POST.
+
+3. Best practices for accessibility and a few ARIA elements for non-descriptive HTML.
+
+
 ## Setup
 
 Clone the repo.
@@ -29,6 +40,10 @@ Run tests by running npm tests.
 - Create a data dashboard that is easy to use and displays information in a clear way
 
 ![screencapture](https://github.com/posi7790/fitlit/blob/master/images/screencapture.png)
+
+After the refactor, 
+
+
 
 ## Created By 
 Ayla Dharamsey & Pol Antoni Sieira 
