@@ -1,5 +1,6 @@
-class SleepRepo {
+class SleepRepo extends StatsParent {
   constructor(sleepData) {
+    super();
     this.sleepData = sleepData;
   }
 

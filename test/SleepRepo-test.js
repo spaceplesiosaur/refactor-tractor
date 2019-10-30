@@ -4,11 +4,13 @@ const expect = chai.expect;
 import sleepData from '../data/sleep-test-data';
 import allSleepData from '../data/sleep';
 import SleepRepo from '../src/SleepRepo';
+import StatsParent from '../src/StatsParent';
 
 
 describe('SleepRepo', () => {
 
   let sleepRepo, fullSleepRepo;
+  
   beforeEach(() => {
     sleepRepo = new SleepRepo(sleepData);
     fullSleepRepo = new SleepRepo(allSleepData);
@@ -23,7 +25,7 @@ describe('SleepRepo', () => {
   });
 
   it('should return the average sleep quality amongst all users', () => {
-    expect(sleepRepo.returnAllSleepQuality()).to.equal(2.9);
+    expect(sleepRepo.getAverageFromDataList(sleepData, 'sleepQuality')).to.equal(2.94)
   });
 
   it('should return all users who average a sleep quality greater than 3 for a given week', () => {

@@ -1,6 +1,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 
+import spies from "chai-spies";
 import activityData from '../data/activity-test-data';
 import userData from '../data/users-test-data';
 
@@ -8,6 +9,8 @@ import Activity from '../src/Activity';
 import User from '../src/User';
 import StatsParent from '../src/StatsParent';
 
+
+chai.use(spies);
 
 describe('Activity', () => {
   let user;
@@ -18,6 +21,16 @@ describe('Activity', () => {
     statsParent = new StatsParent();
     user = new User(userData[0]);
     activity = new Activity(activityData, user);
+    chai.spy.on(user, 'findUser', () => {
+      return {
+        "userID": 1,
+        "date": "2019/06/15",
+        "numSteps": 3577,
+        "minutesActive": 140,
+        "flightsOfStairs": 16
+      }
+    }
+  )
   });
 
   it('should be a function', () => {
@@ -25,13 +38,12 @@ describe('Activity', () => {
   });
 
   it('should have access to userData', () => {
-    expect(activity.user).to.eql(userData[0]);
+    expect(activity.user.id).to.eql(userData[0].id);
   });
 
   it('should have access to activityData', () => {
     expect(activity.activityData).to.eql(activityData);
   });
-
 
   it('should return the miles walked by a specific user for a specific day', () => {
     expect(activity.returnMilesWalked(user.id)).to.equal(6.60);
