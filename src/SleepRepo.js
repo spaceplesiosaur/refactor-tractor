@@ -1,9 +1,10 @@
+import StatsParent from "./StatsParent";
+
 class SleepRepo extends StatsParent {
   constructor(sleepData) {
     super();
     this.sleepData = sleepData;
   }
-
   returnDataByUser() {
     return this.sleepData.reduce((arr, user) => {
       if (!arr[user.userID - 1]) {
