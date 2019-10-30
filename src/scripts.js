@@ -97,7 +97,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
     function hydrationDOM() {
       $('.water-consumed').text(`${hydration.returnDailyFluidOunces(hydrationData, user.id, date, 'numOunces')} ounces \n\n`);
 
-      const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
+      const weeklyOuncesChart = new Chart($('#water-consumed-week')[0].getContext('2d'), {
         type: 'horizontalBar',
         data: {
           labels: dropYear(hydration.returnHydrationWeek(1, hydrationData, user.id)),
@@ -150,7 +150,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
 
     function sleepDOM() {
       $('.hours-slept-day').text(`${sleep.returnUserDataForDay(allSleepData, user.id, date, 'hoursSlept')} hours | ${sleep.returnUserDataForDay(allSleepData, user.id, date, 'sleepQuality')} quality`);
-      const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
+      const weeklySleepChart = new Chart($('#sleep-week')[0].getContext('2d'), {
         type: 'line',
         data: {
           labels: dropYear(sleep.returnWeek(1, allSleepData, user.id)),
@@ -324,9 +324,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
 
 
   function dataSlashFormat() {
-    let formDate = $('#date-form').val();
-    let formDateSlash = formDate.replace('-', '/');
-    return formDateSlash.replace('-', '/')
+    return $('#date-form').val().replace('-', '/').replace('-', '/');
   }
 
   $('#form').click((event) => {
