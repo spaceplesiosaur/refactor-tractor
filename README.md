@@ -43,7 +43,11 @@ Run tests by running npm tests.
 
 After the refactor, 
 
-
+![c9zkTJ](https://i.makeagif.com/media/10-30-2019/c9zkTJ.gif)
 
 ## Created By 
 Ayla Dharamsey & Pol Antoni Sieira 
+
+## Refactored By
+
+Allie McCarthy, Matt Towarnicky and Colin Koga
