@@ -332,11 +332,19 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
   $('#form').click((event) => {
     if (event.target.id === 'log-button') {
       $('#log-buttons').toggle()
+
+      if ($('#log-buttons').is(":visible")) {
+        $('#log-buttons').attr('aria-expanded', true)
+        $('#log-buttons').attr('aria-hidden', false)
+      } else {
+        $('#log-buttons').attr('aria-expanded', false)
+        $('#log-buttons').attr('aria-hidden', true)
+      }
     }
 
     if (event.target.id === 'log-sleep') {
       $('#log-form').html(
-        `<form action="" target="_blank" data-category="sleep">
+        `<section action="" target="_blank" class="expanded-form" data-category="sleep" role="dialog" aria-expanded="true">
         <section class="label-input-box">
           <label for="date" class="label" tabindex="0">Date:</label>
           <input id="date-form" type="date" name="date" tabindex="0">
@@ -351,12 +359,12 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
         </section>
         <br>
         <input id="submit-form" type="submit" value="Submit" tabindex="0">
-      </form>`)
+      </section>`)
     }
 
     if (event.target.id === 'log-activity') {
       $('#log-form').html(
-        `<form action="" target="_blank" data-category="activity">
+        `<section action="" target="_blank" class="expanded-form" data-category="activity" role="dialog" aria-expanded="true">
         <section class="label-input-box">
           <label for="date" class="label" tabindex="0">Date:</label>
           <input id="date-form" type="date" name="date" tabindex="0">
@@ -375,12 +383,12 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
         </section>
         <br>
         <input id="submit-form" type="submit" value="Submit" tabindex="0">
-      </form>`)
+      </section>`)
     }
 
     if (event.target.id === 'log-hydration') {
       $('#log-form').html(
-        `<form action="" target="_blank" data-category="hydration">
+        `<section action="" target="_blank" class="expanded-form" data-category="hydration" role="dialog" aria-expanded="true">
         <section class="label-input-box">
           <label for="date" class="label" tabindex="0">Date:</label>
           <input id="date-form" type="date" name="date" tabindex="0">
@@ -391,7 +399,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
         </section>
         <br>
         <input id="submit-form" type="submit" value="Submit" tabindex="0">
-      </form>`)
+      </section>`)
     }
 
     if (event.target.id === 'submit-form' && $('#hours-slept-form').length > 0) {
@@ -426,7 +434,6 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
         })
       }).catch(error => console.log('There was an error submitting your activity data', error))
     }
-
 
     if (event.target.id === 'submit-form' && $('#ounces-form').length > 0) {
       event.preventDefault();
