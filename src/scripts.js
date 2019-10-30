@@ -57,7 +57,7 @@ Promise.all([userFetch, activityFetch]).then((requiredData) => {
     date = '2020/01/22';
   }
   all(userData, userRepo, user, activityData, activity, activityRepo, date);
-})
+}).catch(data => console.log('Fetch error', data))
 
 let hydrationData;
 let hydration;
@@ -138,6 +138,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
       .then(data => hydrationData = data.hydrationData)
       .then(() => hydration = new Hydration(hydrationData, user.id))
       .then(() => hydrationDOM())
+      .catch(data => console.log('Fetch error - hydration data.', data))
 
     fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
       .then(response => response.json())
@@ -147,6 +148,7 @@ function all(userData, userRepo, user, activityData, activity, activityRepo, dat
         sleepRepo = new SleepRepo(allSleepData)
       })
       .then(() => sleepDOM())
+      .catch(data => console.log('Fetch error - sleep data.', data))
 
     function sleepDOM() {
       $('.hours-slept-day').text(`${sleep.returnUserDataForDay(allSleepData, user.id, date, 'hoursSlept')} hours | ${sleep.returnUserDataForDay(allSleepData, user.id, date, 'sleepQuality')} quality`);
